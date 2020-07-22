@@ -25,3 +25,5 @@ yarn-error.log*
 
 /frontend/package-lock.json
 .idea
+/env
+*.pyc
