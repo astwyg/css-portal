@@ -8,12 +8,23 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Form from 'react-bootstrap/Form';
 
+import url from '../configs/url';
+
 class PageNav extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       registModalVisible: false,
       userinfoModalVisible:false,
+    }
+    this.newUserForm = {
+      inviteCode :React.createRef(),
+      company: React.createRef(),
+      name: React.createRef(),
+      phone: React.createRef(),
+      email: React.createRef(),
+      passwd: React.createRef(),
+      agree: React.createRef(),
     }
   }
 
@@ -26,6 +37,41 @@ class PageNav extends React.Component{
     this.setState({
       userinfoModalVisible:true,
     })
+  }
+
+  handleCreateUser() {
+    if (!this.newUserForm.agree.current.checked) {
+      alert("您需要同意飞腾新基建服务保证联盟章程才能注册本平台.");
+      return;
+    }
+    fetch(url.users, {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        inviteCode: this.newUserForm.inviteCode.current.value,
+        name: this.newUserForm.name.current.value,
+        phone: this.newUserForm.phone.current.value,
+        email: this.newUserForm.email.current.value,
+        passwd: this.newUserForm.passwd.current.value,
+      }),
+      headers: {
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
+      .then((res) => {
+        return res.json(); //请求成功，获请求元数据
+      })
+      .then((result) => {
+        console.log(result); // 拿到数据进行页面渲染
+      })
+      .catch((err) => {
+        //出错了
+      })
+
+  }
+  handleCheckInviteCode(){
+    this.newUserForm.company.current.value = this.newUserForm.inviteCode.current.value;
   }
 
   render(){
@@ -64,7 +110,7 @@ class PageNav extends React.Component{
                       邀请码
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control required placeholder="如果没有申请码请使用自行注册"/>
+                      <Form.Control required ref={this.newUserForm.inviteCode} onChange={()=>this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行注册"/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="company">
@@ -72,7 +118,7 @@ class PageNav extends React.Component{
                       公司
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control disabled required placeholder="填写邀请码后自动识别"/>
+                      <Form.Control disabled required ref={this.newUserForm.company} placeholder="填写邀请码后自动识别"/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="realname">
@@ -80,7 +126,7 @@ class PageNav extends React.Component{
                       姓名
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control required placeholder=""/>
+                      <Form.Control required ref={this.newUserForm.name} placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="phone">
@@ -88,7 +134,7 @@ class PageNav extends React.Component{
                       手机号
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control required placeholder=""/>
+                      <Form.Control required ref={this.newUserForm.phone} placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="email">
@@ -96,7 +142,7 @@ class PageNav extends React.Component{
                       邮箱
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control placeholder=""/>
+                      <Form.Control ref={this.newUserForm.email} placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="passwd">
@@ -104,12 +150,12 @@ class PageNav extends React.Component{
                       服务密码
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control required type="password" placeholder=""/>
+                      <Form.Control required ref={this.newUserForm.passwd} type="password" placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="formHorizontalCheck">
                     <Col sm={{span: 2, offset: 2}}>
-                      <Form.Check label='同意'/>
+                      <Form.Check ref={this.newUserForm.agree} label='同意'/>
                     </Col>
                     <Col>
                       <a href="#">飞腾新基建服务保证联盟章程</a>
@@ -118,7 +164,7 @@ class PageNav extends React.Component{
 
                   <Form.Group as={Row}>
                     <Col sm={{span: 10, offset: 2}}>
-                      <Button type="submit">注册</Button>
+                      <Button variant="primary" onClick={()=>this.handleCreateUser()}>注册</Button>
                     </Col>
                   </Form.Group>
                 </Form>
