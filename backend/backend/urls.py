@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path
 import users.views as users_views
 import page.views as page_views
+import inviteCode.views as inviteCode_views
 
 urlpatterns = [
     path('', page_views.index),
     path('admin/', admin.site.urls),
     path('users/', users_views.api),
+
+    path('inviteCode/check/', inviteCode_views.check),
 ]

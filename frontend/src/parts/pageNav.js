@@ -17,6 +17,7 @@ class PageNav extends React.Component{
       registModalVisible: false,
       userinfoModalVisible:false,
     }
+
     this.newUserForm = {
       inviteCode :React.createRef(),
       company: React.createRef(),
@@ -46,32 +47,56 @@ class PageNav extends React.Component{
     }
     fetch(url.users, {
       method: "POST",
-      mode: 'cors',
       body: JSON.stringify({
         inviteCode: this.newUserForm.inviteCode.current.value,
         name: this.newUserForm.name.current.value,
         phone: this.newUserForm.phone.current.value,
         email: this.newUserForm.email.current.value,
         passwd: this.newUserForm.passwd.current.value,
+        company: this.newUserForm.company.current.value,
       }),
       headers: {
         'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       }
     })
       .then((res) => {
         return res.json(); //请求成功，获请求元数据
       })
       .then((result) => {
-        console.log(result); // 拿到数据进行页面渲染
-      })
-      .catch((err) => {
-        //出错了
-      })
+        if(result.status){
+          alert(result.message);
+        } else {
+          alert(result.message);
+          window.location.reload(false);
+        }
+      });
 
   }
   handleCheckInviteCode(){
-    this.newUserForm.company.current.value = this.newUserForm.inviteCode.current.value;
+    if(this.newUserForm.inviteCode.current.value.length !=7 ){
+      this.newUserForm.company.current.value = '请正确输入7位邀请码'
+    }
+    else{
+      fetch(url.checkInviteCode, {
+        method: "POST",
+        body: JSON.stringify({
+          code: this.newUserForm.inviteCode.current.value,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          if (result.status) {
+            alert(result.message);
+          } else {
+            this.newUserForm.company.current.value = result.message;
+          }
+        });
+    }
   }
 
   render(){
@@ -81,7 +106,7 @@ class PageNav extends React.Component{
           <Col style={{
             textAlign: 'left',
             margin: '10px',
-            fontSize: 'x-large'
+            fontSize: 'large'
           }}>
             <b>飞腾新基建服务保障平台</b>
           </Col>
@@ -90,9 +115,9 @@ class PageNav extends React.Component{
             flex: 1,
             margin: '10px'
           }}>
-            <Button variant="primary" onClick={() => this.setState({registModalVisible: true})}>注册</Button>{' '}
-            <Button variant="primary" onClick={() => this.handleLoadUserinfo()}>用户信息</Button>{' '}
-            <Button variant="success" onClick={()=>alert("等待对接云客服系统的web客服功能, 我们假设已经跳转了.")}>在线客服</Button>{' '}
+            <Button variant="primary" size='sm' onClick={() => this.setState({registModalVisible: true})}>注册</Button>{' '}
+            <Button variant="primary"  size='sm' onClick={() => this.handleLoadUserinfo()}>用户信息</Button>{' '}
+            <Button variant="success"  size='sm' onClick={()=>alert("等待对接云客服系统的web客服功能, 我们假设已经跳转了.")}>在线客服</Button>{' '}
           </Col>
         </Row>
 
