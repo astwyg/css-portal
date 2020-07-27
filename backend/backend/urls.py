@@ -23,6 +23,8 @@ urlpatterns = [
     path('', page_views.index),
     path('admin/', admin.site.urls),
     path('users/', users_views.api),
+    path('login/', users_views.do_login),
+    path('logout/', users_views.do_logout),
 
     path('inviteCode/check/', inviteCode_views.check),
 ]

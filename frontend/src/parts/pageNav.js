@@ -16,7 +16,8 @@ class PageNav extends React.Component{
     this.state = {
       registModalVisible: false,
       userinfoModalVisible:false,
-    }
+      loginModalVisible: false,
+    };
 
     this.newUserForm = {
       inviteCode :React.createRef(),
@@ -26,13 +27,32 @@ class PageNav extends React.Component{
       email: React.createRef(),
       passwd: React.createRef(),
       agree: React.createRef(),
-    }
+    };
+    this.loginForm = {
+      phone : React.createRef(),
+      passwd : React.createRef(),
+    };
   }
 
   handleLogout(){
-    this.setState({
-      userinfoModalVisible:false,
-    })
+    fetch(url.logout, {
+        method: "POST",
+        body: JSON.stringify({}),
+        headers: {
+          'content-type': 'application/json',
+        }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          if (result.status) {
+            alert(result.message);
+          } else{
+            window.location.reload(false);
+          }
+        });
+
   }
   handleLoadUserinfo(){
     this.setState({
@@ -73,7 +93,7 @@ class PageNav extends React.Component{
 
   }
   handleCheckInviteCode(){
-    if(this.newUserForm.inviteCode.current.value.length !=7 ){
+    if(this.newUserForm.inviteCode.current.value.length !==7 ){
       this.newUserForm.company.current.value = '请正确输入7位邀请码'
     }
     else{
@@ -98,6 +118,29 @@ class PageNav extends React.Component{
         });
     }
   }
+  handleLogin(){
+    fetch(url.login, {
+        method: "POST",
+        body: JSON.stringify({
+          phone: this.loginForm.phone.current.value,
+          passwd: this.loginForm.passwd.current.value,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          if (result.status) {
+            alert(result.message);
+          } else{
+            window.location.reload(false);
+          }
+        });
+
+  }
 
   render(){
     return (
@@ -115,9 +158,19 @@ class PageNav extends React.Component{
             flex: 1,
             margin: '10px'
           }}>
-            <Button variant="primary" size='sm' onClick={() => this.setState({registModalVisible: true})}>注册</Button>{' '}
-            <Button variant="primary"  size='sm' onClick={() => this.handleLoadUserinfo()}>用户信息</Button>{' '}
-            <Button variant="success"  size='sm' onClick={()=>alert("等待对接云客服系统的web客服功能, 我们假设已经跳转了.")}>在线客服</Button>{' '}
+            {
+              window.user?
+                 <><Button variant="primary" size='sm' onClick={() => this.handleLoadUserinfo()}>用户信息</Button>{' '}</>
+              :<>
+                <Button variant="primary" size='sm'
+                    onClick={() => this.setState({loginModalVisible: true})}>登录</Button>{' '}
+                <Button variant="primary" size='sm'
+                    onClick={() => this.setState({registModalVisible: true})}>注册</Button>{' '}
+              </>
+            }
+
+            <Button variant="success" size='sm'
+                    onClick={() => alert("等待对接云客服系统的web客服功能, 我们假设已经跳转了.")}>在线客服</Button>{' '}
           </Col>
         </Row>
 
@@ -135,7 +188,8 @@ class PageNav extends React.Component{
                       邀请码
                     </Form.Label>
                     <Col sm={10}>
-                      <Form.Control required ref={this.newUserForm.inviteCode} onChange={()=>this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行注册"/>
+                      <Form.Control required ref={this.newUserForm.inviteCode}
+                                    onChange={() => this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行注册"/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="company">
@@ -189,7 +243,7 @@ class PageNav extends React.Component{
 
                   <Form.Group as={Row}>
                     <Col sm={{span: 10, offset: 2}}>
-                      <Button variant="primary" onClick={()=>this.handleCreateUser()}>注册</Button>
+                      <Button variant="primary" onClick={() => this.handleCreateUser()}>注册</Button>
                     </Col>
                   </Form.Group>
                 </Form>
@@ -209,55 +263,87 @@ class PageNav extends React.Component{
             <Modal.Title>修改用户信息</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-                <br/>
-                <Form>
-                  <Form.Group as={Row} controlId="company">
-                    <Form.Label column sm={2}>
-                      公司
-                    </Form.Label>
-                    <Col sm={10}>
-                      <Form.Control disabled required placeholder="长城?"/>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} controlId="realname">
-                    <Form.Label column sm={2}>
-                      姓名
-                    </Form.Label>
-                    <Col sm={10}>
-                      <Form.Control required placeholder="张三"/>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} controlId="phone">
-                    <Form.Label column sm={2}>
-                      手机号
-                    </Form.Label>
-                    <Col sm={10}>
-                      <Form.Control required placeholder="17710432234"/>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} controlId="email">
-                    <Form.Label column sm={2}>
-                      邮箱
-                    </Form.Label>
-                    <Col sm={10}>
-                      <Form.Control placeholder="aa@cj.cc"/>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row} controlId="passwd">
-                    <Form.Label column sm={2}>
-                      服务密码
-                    </Form.Label>
-                    <Col sm={10}>
-                      <Form.Control required type="password" placeholder="请输入新密码"/>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Col sm={{span: 10, offset: 2}}>
-                      <Button type="submit">更新用户信息</Button> {' '}
-                      <Button variant="danger" onClick={(()=>this.handleLogout())}>注销</Button>
-                    </Col>
-                  </Form.Group>
-                </Form>
+            <br/>
+            <Form>
+              <Form.Group as={Row} controlId="company">
+                <Form.Label column sm={2}>
+                  公司
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control disabled required placeholder="长城?"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} controlId="realname">
+                <Form.Label column sm={2}>
+                  姓名
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control required placeholder="张三"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} controlId="phone">
+                <Form.Label column sm={2}>
+                  手机号
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control required placeholder="17710432234"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} controlId="email">
+                <Form.Label column sm={2}>
+                  邮箱
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control placeholder="aa@cj.cc"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} controlId="passwd">
+                <Form.Label column sm={2}>
+                  服务密码
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control required type="password" placeholder="请输入新密码"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Col sm={{span: 10, offset: 2}}>
+                  <Button type="submit">更新用户信息</Button> {' '}
+                  <Button variant="danger" onClick={(() => this.handleLogout())}>注销</Button>
+                </Col>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+        </Modal>
+
+        <Modal show={this.state.loginModalVisible} onHide={() => this.setState({loginModalVisible: false})}>
+          <Modal.Header closeButton>
+            <Modal.Title>登录</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <br/>
+            <Form>
+              <Form.Group as={Row} controlId="phone">
+                <Form.Label column sm={3}>
+                  手机号
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control required ref={this.loginForm.phone} placeholder="17710432234"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} controlId="passwd">
+                <Form.Label column sm={3}>
+                  服务密码
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control required ref={this.loginForm.passwd} type="password" placeholder="请输入新密码"/>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Col sm={{span: 9, offset: 3}}>
+                  <Button variant="primary"  onClick={() => this.handleLogin()}>登录</Button> {' '}
+                </Col>
+              </Form.Group>
+            </Form>
           </Modal.Body>
         </Modal>
       </Container>
