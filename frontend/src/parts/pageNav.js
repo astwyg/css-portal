@@ -32,6 +32,13 @@ class PageNav extends React.Component{
       phone : React.createRef(),
       passwd : React.createRef(),
     };
+    this.userInfoForm = {
+      company:React.createRef(),
+      name:React.createRef(),
+      phone:React.createRef(),
+      email:React.createRef(),
+      passwd:React.createRef(),
+    };
   }
 
   handleLogout(){
@@ -57,6 +64,11 @@ class PageNav extends React.Component{
   handleLoadUserinfo(){
     this.setState({
       userinfoModalVisible:true,
+    }, ()=>{
+      this.userInfoForm.company.current.value = window.user.company;
+      this.userInfoForm.name.current.value = window.user.name;
+      this.userInfoForm.phone.current.value = window.user.phone;
+      this.userInfoForm.email.current.value = window.user.email;
     })
   }
 
@@ -139,7 +151,30 @@ class PageNav extends React.Component{
             window.location.reload(false);
           }
         });
-
+  }
+  handleUpdateUserInfo(){
+    fetch(url.updateUserInfo, {
+        method: "POST",
+        body: JSON.stringify({
+          name: this.userInfoForm.name.current.value,
+          email: this.userInfoForm.email.current.value,
+          phone: this.userInfoForm.phone.current.value,
+          passwd: this.userInfoForm.passwd.current.value,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          if (result.status) {
+            alert(result.message);
+          } else{
+            window.location.reload(false);
+          }
+        });
   }
 
   render(){
@@ -170,7 +205,7 @@ class PageNav extends React.Component{
             }
 
             <Button variant="success" size='sm'
-                    onClick={() => alert("等待对接云客服系统的web客服功能, 我们假设已经跳转了.")}>在线客服</Button>{' '}
+                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>专家在线咨询</Button>{' '}
           </Col>
         </Row>
 
@@ -250,8 +285,8 @@ class PageNav extends React.Component{
               </Tab>
               <Tab eventKey="diy" title="自行申请">
                 <p>请按照如下步骤申请加入联盟:</p>
-                <p>1. 下载 <a href="#">飞腾新基建服务保障联盟申请表</a>并填写、打印、盖章、扫描</p>
-                <p>2. 下载 <a href="#">飞腾新基建服务保障联盟账号信息表</a>并填写</p>
+                <p>1. 下载 <a href="#" onClick={()=>window.open("/static/飞腾新基建服务保障联盟申请表.docx","_blank")}>飞腾新基建服务保障联盟申请表</a>并填写、打印、盖章、扫描</p>
+                <p>2. 下载 <a href="#" onClick={()=>window.open("/static/飞腾新基建服务保障联盟账号信息表.xlsx","_blank")}>飞腾新基建服务保障联盟账号信息表</a>并填写</p>
                 <p>3. 请将上述第1项扫描件和第2项电子档发邮件到xjj@phytium.com.cn</p>
               </Tab>
             </Tabs>
@@ -270,7 +305,7 @@ class PageNav extends React.Component{
                   公司
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control disabled required placeholder="长城?"/>
+                  <Form.Control disabled required ref={this.userInfoForm.company}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="realname">
@@ -278,7 +313,7 @@ class PageNav extends React.Component{
                   姓名
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control required placeholder="张三"/>
+                  <Form.Control required ref={this.userInfoForm.name}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="phone">
@@ -286,7 +321,7 @@ class PageNav extends React.Component{
                   手机号
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control required placeholder="17710432234"/>
+                  <Form.Control required ref={this.userInfoForm.phone}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="email">
@@ -294,7 +329,7 @@ class PageNav extends React.Component{
                   邮箱
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control placeholder="aa@cj.cc"/>
+                  <Form.Control required ref={this.userInfoForm.email}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="passwd">
@@ -302,12 +337,12 @@ class PageNav extends React.Component{
                   服务密码
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control required type="password" placeholder="请输入新密码"/>
+                  <Form.Control required ref={this.userInfoForm.passwd} type="password" placeholder="请输入新密码"/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row}>
                 <Col sm={{span: 10, offset: 2}}>
-                  <Button type="submit">更新用户信息</Button> {' '}
+                  <Button variant="primary" onClick={() => this.handleUpdateUserInfo()}>更新用户信息</Button> {' '}
                   <Button variant="danger" onClick={(() => this.handleLogout())}>注销</Button>
                 </Col>
               </Form.Group>

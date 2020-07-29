@@ -123,3 +123,26 @@ def do_logout(req):
     return JsonResponse({
         "status": 0
     })
+
+
+def updateUserInfo(req):
+    if req.method == "POST":
+        data = json.loads(req.body)
+        user = req.user
+        user_check = User.objects.filter(username = data.get("phone"))
+        if len(user_check) and user_check[0].id != user.id:
+            return JsonResponse({
+                "status": 1,
+                "message": "手机号{}已注册, 如有问题请致电咨询.".format(user_check.phone)
+            })
+        else:
+            user.username = data.get("phone")
+            user.last_name = data.get("name")
+            user.email = data.get("email")
+            if data.get("passwd"):
+                user.password = data.get("passwd")
+            user.save()
+            return JsonResponse({
+                "status": 0,
+                "message": ""
+            })

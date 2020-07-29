@@ -59,6 +59,14 @@ def postApi(url, data=dict()):
     return postApiRaw(url, data)
 
 
+def putApi(url, params=dict(), data=dict()):
+    params = urlencode(dict(params, **getSign()), quote_via=quote_plus)
+    url = UDESK["entry"] + url + '?' + params
+    r = requests.put(url, data=data)
+    assert str(r.status_code).startswith("2")
+    return r.json()
+
+
 def postApiV1(url, data=dict(), params=dict()):
     md5 = hashlib.md5()
     query = urlencode(params, quote_via=quote_plus)
@@ -78,10 +86,10 @@ def postApiV1(url, data=dict(), params=dict()):
 if __name__ == "__main__":
     # r = postApi("open_api_v1/customers",{
     #     "customer":{
-    #         "email":"mail@ft.com",
-    #         "nick_name":"王永刚",
+    #         "email":"mail2@ft.com",
+    #         "nick_name":"王永刚1",
     #         "cellphones":[
-    #             [None,17710432234]
+    #             [None,17710432236]
     #         ],
     #         "description": json.dumps({
     #             "公司":"飞腾",
@@ -89,6 +97,7 @@ if __name__ == "__main__":
     #         })
     #     }
     # })
+    # print(r)
 
     # r = postApiV1("api/v1/tickets/get.json", {
     #     "email":"mail@ft.com",
@@ -105,9 +114,17 @@ if __name__ == "__main__":
     # })
     # print(r) # id=36901
 
-    r = getApi("open_api_v1/knowledge_questions", {
-        "catalog_id":36901,
-        "agent_id":0
+    ## 查询知识库
+    # r = getApi("open_api_v1/knowledge_questions", {
+    #     "catalog_id":36901,
+    #     "agent_id":0
+    # })
+    # print(r)
+
+    ## 查询用户
+    r = getApi("open_api_v1/customers/get_customer", {
+        "type":"id",
+        "customer": "97510052"
     })
     print(r)
 
