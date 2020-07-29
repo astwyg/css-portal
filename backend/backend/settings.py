@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders', #debug
     'users.apps.UsersConfig',
     'page.apps.PageConfig',
+    'udeskApi.apps.UdeskapiConfig',
 ]
 
 MIDDLEWARE = [

@@ -7,6 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 
 from .models import Users
 from inviteCode.models import InviteCode
+from udeskApi.utils import postApi
+
+
+def addUserToUdesk(customer):
+    r = postApi("open_api_v1/customers", customer)
+    assert r.get("code") == 1000
 
 
 def api(req):
@@ -28,6 +34,19 @@ def api(req):
                 company = data.get("inviteCode")[7:]
             )
             users.save()
+            addUserToUdesk({
+                "customer": {
+                    "email": data.get("email"),
+                    "nick_name": data.get("name"),
+                    "cellphones": [
+                        [None, data.get("phone")]
+                    ],
+                    "description": json.dumps({
+                        "公司": data.get("inviteCode")[7:],
+                        "职务": ""
+                    })
+                }
+            })
             return JsonResponse({
                 "status":0,
                 "message":"注册成功"
@@ -57,14 +76,26 @@ def api(req):
                 user.save()
                 users = Users(
                     user=user,
-                    inviteCode='backdoor',
+                    inviteCode=inviteCode.code,
                     company=inviteCode.company
                 )
                 users.save()
                 inviteCode.active = False
                 inviteCode.users = users
                 inviteCode.save()
-                # todo 调用SaaS平台接口, 增加CRM用户
+                addUserToUdesk({
+                    "customer": {
+                        "email": data.get("email"),
+                        "nick_name": data.get("name"),
+                        "cellphones": [
+                            [None, data.get("phone")]
+                        ],
+                        "description": json.dumps({
+                            "公司": inviteCode.company,
+                            "职务": ""
+                        })
+                    }
+                })
                 return JsonResponse({
                     "status": 0,
                     "message": "注册成功"
