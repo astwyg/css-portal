@@ -18,6 +18,7 @@ from django.urls import path
 import users.views as users_views
 import page.views as page_views
 import inviteCode.views as inviteCode_views
+import udeskApi.views as udeskApi_views
 
 urlpatterns = [
     path('', page_views.index),
@@ -27,4 +28,7 @@ urlpatterns = [
     path('logout/', users_views.do_logout),
 
     path('inviteCode/check/', inviteCode_views.check),
+
+    path('saasApi/getTickets/', udeskApi_views.getTickets),
+    path('saasApi/getKnowledges/', udeskApi_views.getKnowledges),
 ]

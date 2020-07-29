@@ -71,7 +71,7 @@ def postApiV1(url, data=dict(), params=dict()):
         sign = md5.hexdigest()
         url = UDESK["entry"] + url + "?sign=" + sign
     r = requests.post(url, json=data)
-    assert r.status_code == 201
+    assert str(r.status_code).startswith("2")
     return r.json()
 
 
@@ -90,10 +90,10 @@ if __name__ == "__main__":
     #     }
     # })
 
-    r = postApiV1("api/v1/tickets/get.json", {
-        "email":"mail@ft.com",
-    })
-    print(r)
+    # r = postApiV1("api/v1/tickets/get.json", {
+    #     "email":"mail@ft.com",
+    # })
+    # print(r)
 
     # r = postApi("open_api_v1/knowledge_catalogs",{
     #         "knowledge_catalog": {
@@ -105,9 +105,9 @@ if __name__ == "__main__":
     # })
     # print(r) # id=36901
 
-    # r = getApi("open_api_v1/knowledge_questions", {
-    #     "catalog_id":36901,
-    #     "agent_id":0
-    # })
-    # print(r)
+    r = getApi("open_api_v1/knowledge_questions", {
+        "catalog_id":36901,
+        "agent_id":0
+    })
+    print(r)
 

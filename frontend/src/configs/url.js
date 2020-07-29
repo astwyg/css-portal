@@ -6,6 +6,8 @@ let url = {
   checkInviteCode: host+'inviteCode/check/',
   login: host+'login/',
   logout: host+'logout/',
+  saasApiGetTickets: host+'saasApi/getTickets/',
+  saasApiGetKnowledges: host+'saasApi/getKnowledges/',
 };
 
 export default url;

@@ -9,10 +9,21 @@ import Table from 'react-bootstrap/Table';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Tab from 'react-bootstrap/Tab';
 import Modal from 'react-bootstrap/Modal';
+import url from "../configs/url";
 
-function alertClicked() {
-  alert('You clicked the third ListGroupItem');
-}
+
+const showList = contents =>{
+  return (<div>
+    {
+      contents.map(c => {
+        return <Row>
+          <Col sm={3} style={{textAlign:"right"}}>{c[0]} {' : '}</Col>
+          <Col sm={9}>{c[1]}</Col>
+        </Row>
+      })
+    }
+  </div>)
+};
 
 class PageContent extends React.Component {
   constructor(props) {
@@ -20,15 +31,70 @@ class PageContent extends React.Component {
     this.state = {
       ticketModalVisible:false,
       knowledgeModalVisible:false,
+      tickets:[],
+      currentTicketContent:"",
+      knowledges:[],
+      currentKnowledge:"",
     }
   }
 
-  handleShowTicket(){
-    this.setState({ticketModalVisible:true})
+  componentDidMount(){
+    if(window.user){
+      fetch(url.saasApiGetTickets, {
+        method: "POST",
+        body: JSON.stringify({
+        }),
+        headers: {
+          'content-type': 'application/json',
+        }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          if (result.status) {
+            alert(result.message);
+          } else{
+            this.setState({
+              tickets: result.contents
+            })
+          }
+        });
+
+      fetch(url.saasApiGetKnowledges, {
+        method: "POST",
+        body: JSON.stringify({
+        }),
+        headers: {
+          'content-type': 'application/json',
+        }
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          this.setState({ //udesk API, 一代不如一代, v2居然返回code=1000代表成功, 所以不再检查status.
+            knowledges: result.knowledge_questions
+          })
+        });
+    }
   }
 
-  handleShowKnowledge(){
-    this.setState({knowledgeModalVisible:true})
+  handleShowTicket(ticket){
+    const content = showList([
+      ["工单id", ticket.id],
+      ["标题", ticket.subject],
+      ["状态", ticket.status],
+      ["创建时间", (new Date(ticket.created_at)).toLocaleString()],
+      ["最后更新", (new Date(ticket.updated_at)).toLocaleString()],
+      ["处理人", ticket.replied_by],
+      ["处理意见", ticket.replies]
+    ]);
+    this.setState({ticketModalVisible:true, currentTicketContent:content});
+  }
+
+  handleShowKnowledge(knowledge){
+    this.setState({knowledgeModalVisible:true, currentKnowledge: <div dangerouslySetInnerHTML={{__html:knowledge.content}} />});
   }
 
   render(){
@@ -60,25 +126,33 @@ class PageContent extends React.Component {
           <Table striped bordered hover>
             <thead>
             <tr>
-              <th>类型</th>
+              <th>编号</th>
               <th>标题</th>
-              <th>时间</th>
-              <th>状态</th>
+              <th>更新时间</th>
+              <th>当前状态</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>咨询</td>
-              <td>FT-2000/64有几个核?</td>
-              <td>2020/7/30</td>
-              <td><Button variant="outline-success" size='sm' onClick={()=>this.handleShowTicket()}>已完成</Button>{' '}</td>
-            </tr>
-            <tr>
-              <td>项目合作</td>
-              <td>津南密码项目合作</td>
-              <td>2020/7/30</td>
-              <td><Button variant="outline-danger" size='sm' onClick={()=>this.handleShowTicket()}>正在处理</Button>{' '}</td>
-            </tr>
+            {window.user ?
+              this.state.tickets.map(ticket => {
+                return (<tr>
+                  <td>{ticket.id}</td>
+                  <td>{ticket.subject}</td>
+                  <td>{(new Date(ticket.updated_at)).toLocaleDateString()}</td>
+                  <td>{
+                    ticket.status === 'open' ?
+                      <Button variant="outline-danger" size='sm'
+                              onClick={() => this.handleShowTicket(ticket)}>正在处理</Button>
+                      :
+                      <Button variant="outline-success" size='sm'
+                              onClick={() => this.handleShowTicket(ticket)}>已完成</Button>
+                  }</td>
+                </tr>)
+              })
+              : <tr>
+                <td colspan="4">请登录后查看工单</td>
+              </tr>
+            }
             </tbody>
           </Table>
         </Row>
@@ -90,42 +164,45 @@ class PageContent extends React.Component {
             width: "100%",
             textAlign: 'left'
           }}>
-            <ListGroup.Item action onClick={()=>this.handleShowKnowledge()}>
-              飞腾新基建服务联盟章程
-            </ListGroup.Item>
-            <ListGroup.Item action onClick={()=>this.handleShowKnowledge()}>
-              飞腾CPU100问
-            </ListGroup.Item>
-            <ListGroup.Item action onClick={()=>this.handleShowKnowledge()}>
-              飞腾CPU适配列表
-            </ListGroup.Item>
-          </ListGroup>,
+            {window.user ?
+              this.state.knowledges.map(knowledge => {
+                return (<ListGroup.Item action onClick={() => this.handleShowKnowledge(knowledge)}>
+                  {knowledge.title}
+                </ListGroup.Item>)
+              })
+              : <ListGroup.Item action>
+                请登录后查看知识库
+              </ListGroup.Item>
+            }
+          </ListGroup>
         </Row>
 
-        <Modal show={this.state.ticketModalVisible} onHide={()=>this.setState({ticketModalVisible:false})}>
-        <Modal.Header closeButton>
-          <Modal.Title>工单详情</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>等待对接SaaS客服系统, 我们假设这里显示了工单流转信息</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={()=>this.setState({ticketModalVisible:false})}>
-            关闭
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Modal show={this.state.ticketModalVisible} size='lg'
+               onHide={() => this.setState({ticketModalVisible: false, currentTicketContent: ""})}>
+          <Modal.Header closeButton>
+            <Modal.Title>工单详情</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.currentTicketContent}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary"
+                    onClick={() => this.setState({ticketModalVisible: false, currentTicketContent: ""})}>
+              关闭
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
-        <Modal show={this.state.knowledgeModalVisible} onHide={()=>this.setState({knowledgeModalVisible:false})}>
-        <Modal.Header closeButton>
-          <Modal.Title>知识库详情</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>等待对接SaaS客服系统, 我们假设这里显示了知识库信息</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={()=>this.setState({knowledgeModalVisible:false})}>
-            关闭
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
+        <Modal show={this.state.knowledgeModalVisible} size='lg'
+               onHide={() => this.setState({knowledgeModalVisible: false, currentKnowledge:""})}>
+          <Modal.Header closeButton>
+            <Modal.Title>知识库详情</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.currentKnowledge}</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => this.setState({knowledgeModalVisible: false, currentKnowledge:""})}>
+              关闭
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
   }
