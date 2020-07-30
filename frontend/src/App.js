@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import PageNav from './parts/pageNav';
 import PageContent from './parts/pageContent';
+import PageFooter from './parts/pageFooter';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Row>
           <PageNav/>
           <PageContent></PageContent>
+          <PageFooter/>
         </Row>
       </Container>
 

@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from .models import Users
 from inviteCode.models import InviteCode
-from udeskApi.utils import postApi
+from udeskApi.utils import postApi, getApi, putApi
 
 
 def addUserToUdesk(customer):
@@ -129,14 +129,37 @@ def updateUserInfo(req):
     if req.method == "POST":
         data = json.loads(req.body)
         user = req.user
+
+        # 查重
         user_check = User.objects.filter(username = data.get("phone"))
         if len(user_check) and user_check[0].id != user.id:
             return JsonResponse({
                 "status": 1,
                 "message": "手机号{}已注册, 如有问题请致电咨询.".format(user_check.phone)
             })
+        user_check = User.objects.filter(username=data.get("email"))
+        if len(user_check) and user_check[0].id != user.id:
+            return JsonResponse({
+                "status": 2,
+                "message": "邮箱{}已注册, 如有问题请致电咨询.".format(user_check.email)
+            })
         else:
-            user.username = data.get("phone")
+            # 同步udesk
+            info = {"customer": {}}
+            if user.username != data.get("phone"):
+                info["customer"]["cellphones"] = [None, data.get("phone")]
+            if user.last_name != data.get("name"):
+                info["customer"]["nick_name"] = data.get("name")
+            if user.email != data.get("email"):
+                info["customer"]["email"] = data.get("email")
+            if info["customer"]:
+                r = putApi("open_api_v1/customers/update_customer", params={
+                    "type": "cellphone",
+                    "content": user.username
+                }, data=info)
+                assert r.get("code") == 1000
+
+            user.username = data.get("phone") # 这三行加到上面去会导致user.username过早更新, putApi就没法弄了.
             user.last_name = data.get("name")
             user.email = data.get("email")
             if data.get("passwd"):

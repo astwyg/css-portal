@@ -62,7 +62,7 @@ def postApi(url, data=dict()):
 def putApi(url, params=dict(), data=dict()):
     params = urlencode(dict(params, **getSign()), quote_via=quote_plus)
     url = UDESK["entry"] + url + '?' + params
-    r = requests.put(url, data=data)
+    r = requests.put(url, json=data)
     assert str(r.status_code).startswith("2")
     return r.json()
 
@@ -123,8 +123,16 @@ if __name__ == "__main__":
 
     ## 查询用户
     r = getApi("open_api_v1/customers/get_customer", {
-        "type":"id",
-        "customer": "97510052"
+        "type":"cellphone",
+        "content": "17710432234"
+    })
+    r = putApi("open_api_v1/customers/update_customer", params={
+        "type": "cellphone",
+        "content": "17710432234"
+    }, data={
+        "customer": {
+            "nick_name":"王永刚_改",
+        }
     })
     print(r)
 
