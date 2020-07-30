@@ -21,11 +21,11 @@ def api(req):
     elif req.method == 'POST': # 新建用户
         data = json.loads(req.body)
         if data.get("inviteCode").startswith("3330000"): # 后门邀请码
-            user = User(
+            user = User.objects.create_user(
                 username = data.get("phone"),
                 last_name = data.get("name"),
                 email = data.get("email"),
-                password = data.get("passwd")
+                password=data.get("passwd"),
             )
             user.save()
             users = Users(
@@ -67,7 +67,7 @@ def api(req):
                 })
             else:
                 # todo 使用事务
-                user = User(
+                user = User.objects.create_user(
                     username=data.get("phone"),
                     last_name=data.get("name"),
                     email=data.get("email"),
@@ -163,7 +163,7 @@ def updateUserInfo(req):
             user.last_name = data.get("name")
             user.email = data.get("email")
             if data.get("passwd"):
-                user.password = data.get("passwd")
+                user.set_password(data.get("passwd"))
             user.save()
             return JsonResponse({
                 "status": 0,
