@@ -145,6 +145,7 @@ class PageNav extends React.Component{
           return res.json();
         })
         .then((result) => {
+          console.log(result);
           if (result.status) {
             alert(result.message);
           } else{
@@ -181,14 +182,14 @@ class PageNav extends React.Component{
     return (
       <Container>
         <Row>
-          <Col style={{
+          <Col xs={12} sm={4} style={{
             textAlign: 'left',
             margin: '10px',
             fontSize: 'large'
           }}>
             <b>飞腾新基建服务保障平台</b>
           </Col>
-          <Col className="buttons" style={{
+          <Col xs={12} sm={8} style={{
             textAlign: 'right',
             flex: 1,
             margin: '10px'

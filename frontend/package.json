@@ -1,11 +1,12 @@
 {
   "name": "frontend",
-  "homepage":"http://127.0.0.1:8000/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.5.0",
+    "console-polyfill": "^0.3.0",
     "cra-template": "1.0.3",
+    "es5-shim": "^4.5.14",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
@@ -28,12 +29,12 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ]
   },
-  "proxy": "http://127.0.0.1:8000/",
+  "proxy": "http://10.22.4.3:8000/",
   "devDependencies": {
     "npm-watch": "^0.6.0"
   },

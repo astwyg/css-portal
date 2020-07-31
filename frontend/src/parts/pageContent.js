@@ -17,13 +17,40 @@ const showList = contents =>{
     {
       contents.map(c => {
         return <Row>
-          <Col sm={3} style={{textAlign:"right"}}>{c[0]} {' : '}</Col>
-          <Col sm={9}>{c[1]}</Col>
+          <Col className="d-none d-sm-block" sm={3} style={{textAlign:"right"}}>{c[0]} {' : '}</Col>
+          <Col className="d-none d-sm-block" sm={9}>{c[1]}</Col>
+          <Col className="d-block d-sm-none" sm={12}>{c[0]} {' : '}</Col>
+          <Col className="d-block d-sm-none" sm={12} style={{textAlign:"right"}}>{c[1]}</Col>
         </Row>
       })
     }
   </div>)
 };
+
+const repliesTable = replies=>{
+  return(
+    <Table striped bordered hover style={{marginTop:"15px"}}>
+      <thead>
+        <tr>
+          <th>处理人</th>
+          <th>处理时间</th>
+          <th>处理意见</th>
+        </tr>
+      </thead>
+      <tbody>
+      {replies.map(reply=>{
+        if(reply.reply_content_type === "html"){
+          return (<tr>
+            <td>{reply.reply_user}</td>
+            <td>{(new Date(reply.reply_updated_at)).toLocaleString()}</td>
+            <div dangerouslySetInnerHTML={{__html:reply.reply_content}} />
+          </tr>)
+        }
+      })}
+      </tbody>
+    </Table>
+  )
+}
 
 class PageContent extends React.Component {
   constructor(props) {
@@ -81,15 +108,17 @@ class PageContent extends React.Component {
   }
 
   handleShowTicket(ticket){
-    const content = showList([
+    let infoList = showList([
       ["工单id", ticket.id],
       ["标题", ticket.subject],
       ["状态", ticket.status],
       ["创建时间", (new Date(ticket.created_at)).toLocaleString()],
-      ["最后更新", (new Date(ticket.updated_at)).toLocaleString()],
-      ["处理人", ticket.replied_by],
-      ["处理意见", ticket.replies]
+      ["最后更新", (new Date(ticket.updated_at)).toLocaleString()]
     ]);
+    let content = (<div>
+      {infoList}
+      {repliesTable(ticket.replies)}
+    </div>);
     this.setState({ticketModalVisible:true, currentTicketContent:content});
   }
 
