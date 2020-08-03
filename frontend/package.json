@@ -34,7 +34,7 @@
       "not op_mini all"
     ]
   },
-  "proxy": "http://10.22.4.3:8000/",
+  "proxy": "http://123.150.8.50:8000/",
   "devDependencies": {
     "npm-watch": "^0.6.0"
   },

@@ -29,6 +29,7 @@ urlpatterns = [
     path('updateUserInfo/', users_views.updateUserInfo),
 
     path('inviteCode/check/', inviteCode_views.check),
+    path('inviteCode/batchCreate/', inviteCode_views.batchCreate),
 
     path('saasApi/getTickets/', udeskApi_views.getTickets),
     path('saasApi/getKnowledges/', udeskApi_views.getKnowledges),

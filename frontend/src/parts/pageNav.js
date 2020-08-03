@@ -204,9 +204,6 @@ class PageNav extends React.Component{
                     onClick={() => this.setState({registModalVisible: true})}>注册</Button>{' '}
               </>
             }
-
-            <Button variant="success" size='sm'
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>专家在线咨询</Button>{' '}
           </Col>
         </Row>
 

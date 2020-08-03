@@ -28,3 +28,4 @@ yarn-error.log*
 /env
 *.pyc
 /backend/backend/config.py
+/tools/build
