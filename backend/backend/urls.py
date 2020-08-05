@@ -33,4 +33,6 @@ urlpatterns = [
 
     path('saasApi/getTickets/', udeskApi_views.getTickets),
     path('saasApi/getKnowledges/', udeskApi_views.getKnowledges),
+
+    path('admin/inviteCode/bulk_add/', inviteCode_views.batchCreate),
 ]

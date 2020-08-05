@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import Users
+from django.contrib.auth.models import User
 
 
 class InviteCode(models.Model):
@@ -8,6 +9,7 @@ class InviteCode(models.Model):
     company = models.CharField('公司', max_length=128, blank=True)
     active = models.BooleanField("可用", default=True)
     users = models.ForeignKey(Users, on_delete=models.SET_NULL, blank=True, null=True)
+    creater = models.ForeignKey(User, related_name="%(class)s_creater", on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name = '激活码'
