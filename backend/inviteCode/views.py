@@ -14,7 +14,7 @@ def check(req):
         data = json.loads(req.body)
         code = data.get("code")
 
-        if len(code) != 7:
+        if len(code) != 8:
             return JsonResponse({
                 "status": 1,
                 "message": "邀请码位数不对"
@@ -73,7 +73,7 @@ def batchCreate(req):
                 inviteCodes = []
                 start = InviteCode.objects.all().count()
                 for _ in range(number):
-                    code = ''.join(random.choice(string.ascii_uppercase) for _ in range(3)) + str(start).zfill(4)
+                    code = ''.join(random.choice(string.ascii_uppercase) for _ in range(2)) + str(start).zfill(6)
                     start += 1
                     codes.append(code)
                     inviteCodes.append(InviteCode(

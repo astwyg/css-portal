@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import InviteCode
+from .models import InviteCode, InviteCodeBatch
 from django.template.response import TemplateResponse
 from django.urls import path
-from django import forms
-from django.http import HttpResponseRedirect
+from inviteCode.views import batchCreate
 
 
+@admin.register(InviteCode)
 class InviteCodeAdmin(admin.ModelAdmin):
     list_display = ('code', 'company', 'active', 'users',)
     search_fields = ['company']
@@ -22,4 +22,7 @@ class InviteCodeAdmin(admin.ModelAdmin):
         return TemplateResponse(request, "inviteCode/bulk_add.html", context)
 
 
-admin.site.register(InviteCode, InviteCodeAdmin)
+@admin.register(InviteCodeBatch)
+class FeedbackStatsAdmin(admin.ModelAdmin):
+    def changelist_view(self, request, extra_content=None):
+        return batchCreate(request)

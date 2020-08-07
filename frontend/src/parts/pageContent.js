@@ -144,7 +144,7 @@ class PageContent extends React.Component {
               成为飞腾新基建服务保障联盟会员，可以使用本平台全部功能，并可优先通过400-xxxx获取专家电话支持。
             </p>
             <p>
-              <Button variant="primary" onClick={()=>window.open("/static/飞腾新基建服务保障联盟章程.pdf","_blank")}>查看联盟章程</Button>
+                <Button variant="primary" onClick={()=>window.open("/static/飞腾新基建服务保障联盟章程.pdf","_blank")}>查看联盟章程</Button>
             </p>
           </Jumbotron>
         </Row>
@@ -204,7 +204,7 @@ class PageContent extends React.Component {
               this.state.tickets.map(ticket => {
                 return (<tr>
                   <td>{ticket.id}</td>
-                  <td>{ticket.subject}</td>
+                  <td><a href="#" onClick={() => this.handleShowTicket(ticket)}>{ticket.subject}</a></td>
                   <td>{(new Date(ticket.updated_at)).toLocaleDateString()}</td>
                   <td>{
                     ticket.status === 'open' ?

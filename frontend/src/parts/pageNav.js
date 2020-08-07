@@ -22,6 +22,7 @@ class PageNav extends React.Component{
     this.newUserForm = {
       inviteCode :React.createRef(),
       company: React.createRef(),
+      title: React.createRef(),
       name: React.createRef(),
       phone: React.createRef(),
       email: React.createRef(),
@@ -34,6 +35,7 @@ class PageNav extends React.Component{
     };
     this.userInfoForm = {
       company:React.createRef(),
+      title: React.createRef(),
       name:React.createRef(),
       phone:React.createRef(),
       email:React.createRef(),
@@ -69,12 +71,33 @@ class PageNav extends React.Component{
       this.userInfoForm.name.current.value = window.user.name;
       this.userInfoForm.phone.current.value = window.user.phone;
       this.userInfoForm.email.current.value = window.user.email;
+      this.userInfoForm.title.current.value = window.user.title;
     })
   }
 
   handleCreateUser() {
     if (!this.newUserForm.agree.current.checked) {
       alert("您需要同意飞腾新基建服务保证联盟章程才能注册本平台.");
+      return;
+    }
+    if (!this.newUserForm.title.current.value) {
+      alert("请输入职位");
+      return;
+    }
+    if (!this.newUserForm.name.current.value) {
+      alert("请输入姓名");
+      return;
+    }
+    if (!this.newUserForm.phone.current.value || this.newUserForm.phone.current.value.length!==11) {
+      alert("请正确输入11位手机号");
+      return;
+    }
+    if (!this.newUserForm.email.current.value) {
+      alert("请输入邮箱");
+      return;
+    }
+    if (!this.newUserForm.passwd.current.value) {
+      alert("请输入服务密码");
       return;
     }
     fetch(url.users, {
@@ -86,6 +109,7 @@ class PageNav extends React.Component{
         email: this.newUserForm.email.current.value,
         passwd: this.newUserForm.passwd.current.value,
         company: this.newUserForm.company.current.value,
+        title: this.newUserForm.title.current.value,
       }),
       headers: {
         'content-type': 'application/json',
@@ -95,18 +119,22 @@ class PageNav extends React.Component{
         return res.json(); //请求成功，获请求元数据
       })
       .then((result) => {
-        if(result.status){
-          alert(result.message);
-        } else {
+        if(result.status === 0){
           alert(result.message);
           window.location.reload(false);
+        } else{
+          if(result.message){
+            alert(result.message);
+          } else {
+            alert("发生了未知的服务器错误, 请联系400客服.");
+          }
         }
       });
 
   }
   handleCheckInviteCode(){
-    if(this.newUserForm.inviteCode.current.value.length !==7 ){
-      this.newUserForm.company.current.value = '请正确输入7位邀请码'
+    if(this.newUserForm.inviteCode.current.value.length !==8 ){
+      this.newUserForm.company.current.value = '请正确输入8位邀请码'
     }
     else{
       fetch(url.checkInviteCode, {
@@ -131,6 +159,14 @@ class PageNav extends React.Component{
     }
   }
   handleLogin(){
+    if(!this.loginForm.phone.current.value || this.loginForm.phone.current.value.length!==11){
+      alert("请正确输入13位手机号");
+      return;
+    }
+    if(!this.loginForm.passwd.current.value){
+      alert("请输入服务密码");
+      return;
+    }
     fetch(url.login, {
         method: "POST",
         body: JSON.stringify({
@@ -157,6 +193,7 @@ class PageNav extends React.Component{
     fetch(url.updateUserInfo, {
         method: "POST",
         body: JSON.stringify({
+          title: this.userInfoForm.title.current.value,
           name: this.userInfoForm.name.current.value,
           email: this.userInfoForm.email.current.value,
           phone: this.userInfoForm.phone.current.value,
@@ -217,65 +254,73 @@ class PageNav extends React.Component{
                 <br/>
                 <Form>
                   <Form.Group as={Row}>
-                    <Form.Label column sm={2} controlId="inviteCode">
+                    <Form.Label column sm={3} controlId="inviteCode" style={{textAlign:"right"}}>
                       邀请码
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control required ref={this.newUserForm.inviteCode}
                                     onChange={() => this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行注册"/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="company">
-                    <Form.Label column sm={2}>
+                    <Form.Label column sm={3} style={{textAlign:"right"}}>
                       公司
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control disabled required ref={this.newUserForm.company} placeholder="填写邀请码后自动识别"/>
                     </Col>
                   </Form.Group>
+                  <Form.Group as={Row} controlId="title">
+                    <Form.Label column sm={3} style={{textAlign:"right"}}>
+                      职位
+                    </Form.Label>
+                    <Col sm={9}>
+                      <Form.Control required ref={this.newUserForm.title} placeholder=""/>
+                    </Col>
+                  </Form.Group>
                   <Form.Group as={Row} controlId="realname">
-                    <Form.Label column sm={2}>
+                    <Form.Label column sm={3} style={{textAlign:"right"}}>
                       姓名
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control required ref={this.newUserForm.name} placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="phone">
-                    <Form.Label column sm={2}>
+                    <Form.Label column sm={3} style={{textAlign:"right"}}>
                       手机号
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control required ref={this.newUserForm.phone} placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="email">
-                    <Form.Label column sm={2}>
+                    <Form.Label column sm={3} style={{textAlign:"right"}}>
                       邮箱
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control ref={this.newUserForm.email} placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="passwd">
-                    <Form.Label column sm={2}>
+                    <Form.Label column sm={3} style={{textAlign:"right"}}>
                       服务密码
                     </Form.Label>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <Form.Control required ref={this.newUserForm.passwd} type="password" placeholder=""/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="formHorizontalCheck">
-                    <Col sm={{span: 2, offset: 2}}>
+                    <Col sm={{span: 2, offset: 3}}>
                       <Form.Check ref={this.newUserForm.agree} label='同意'/>
                     </Col>
                     <Col>
-                      <a href="#">飞腾新基建服务保证联盟章程</a>
+                      <a href="#" onClick={()=>window.open("/static/飞腾新基建服务保障联盟章程.pdf","_blank")}>飞腾新基建服务保证联盟章程</a>
                     </Col>
                   </Form.Group>
 
                   <Form.Group as={Row}>
-                    <Col sm={{span: 10, offset: 2}}>
+                    <Col sm={{span: 4, offset: 3}}>
                       <Button variant="primary" onClick={() => this.handleCreateUser()}>注册</Button>
                     </Col>
                   </Form.Group>
@@ -285,7 +330,7 @@ class PageNav extends React.Component{
                 <p>请按照如下步骤申请加入联盟:</p>
                 <p>1. 下载 <a href="#" onClick={()=>window.open("/static/飞腾新基建服务保障联盟申请表.docx","_blank")}>飞腾新基建服务保障联盟申请表</a>并填写、打印、盖章、扫描</p>
                 <p>2. 下载 <a href="#" onClick={()=>window.open("/static/飞腾新基建服务保障联盟账号信息表.xlsx","_blank")}>飞腾新基建服务保障联盟账号信息表</a>并填写</p>
-                <p>3. 请将上述第1项扫描件和第2项电子档发邮件到xjj@phytium.com.cn</p>
+                <p>3. 请将上述第1项扫描件和第2项电子档发邮件到<a href="mailto:pnic@phytium.com.cn">pnic@phytium.com.cn</a></p>
               </Tab>
             </Tabs>
           </Modal.Body>
@@ -299,47 +344,55 @@ class PageNav extends React.Component{
             <br/>
             <Form>
               <Form.Group as={Row} controlId="company">
-                <Form.Label column sm={2}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   公司
                 </Form.Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Form.Control disabled required ref={this.userInfoForm.company}/>
                 </Col>
               </Form.Group>
+              <Form.Group as={Row} controlId="company">
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
+                  职务
+                </Form.Label>
+                <Col sm={9}>
+                  <Form.Control required ref={this.userInfoForm.title}/>
+                </Col>
+              </Form.Group>
               <Form.Group as={Row} controlId="realname">
-                <Form.Label column sm={2}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   姓名
                 </Form.Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Form.Control required ref={this.userInfoForm.name}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="phone">
-                <Form.Label column sm={2}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   手机号
                 </Form.Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Form.Control required ref={this.userInfoForm.phone}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="email">
-                <Form.Label column sm={2}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   邮箱
                 </Form.Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Form.Control required ref={this.userInfoForm.email}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="passwd">
-                <Form.Label column sm={2}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   服务密码
                 </Form.Label>
-                <Col sm={10}>
+                <Col sm={9}>
                   <Form.Control required ref={this.userInfoForm.passwd} type="password" placeholder="请输入新密码"/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row}>
-                <Col sm={{span: 10, offset: 2}}>
+                <Col sm={{span: 9, offset: 3}}>
                   <Button variant="primary" onClick={() => this.handleUpdateUserInfo()}>更新用户信息</Button> {' '}
                   <Button variant="danger" onClick={(() => this.handleLogout())}>注销</Button>
                 </Col>
@@ -356,7 +409,7 @@ class PageNav extends React.Component{
             <br/>
             <Form>
               <Form.Group as={Row} controlId="phone">
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   手机号
                 </Form.Label>
                 <Col sm={8}>
@@ -364,7 +417,7 @@ class PageNav extends React.Component{
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="passwd">
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} style={{textAlign:"right"}}>
                   服务密码
                 </Form.Label>
                 <Col sm={8}>

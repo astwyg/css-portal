@@ -3,9 +3,10 @@
 {% load static %}
 
 {% block content %}
+<p>填写表单点击生成按钮, 之后切记不要刷新页面, 否则会重复生成!</p>
 <form action="" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Submit">
+    <input type="submit" value="生成">
 </form>
 {% endblock %}

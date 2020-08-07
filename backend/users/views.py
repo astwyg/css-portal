@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Users
 from inviteCode.models import InviteCode
 from udeskApi.utils import postApi, getApi, putApi
+from backend.config import BACKDOOR_INVITE_CODE
 
 
 def addUserToUdesk(customer):
@@ -20,7 +21,20 @@ def api(req):
         return HttpResponse("no GET method")
     elif req.method == 'POST': # 新建用户
         data = json.loads(req.body)
-        if data.get("inviteCode").startswith("3330000"): # 后门邀请码
+        if data.get("inviteCode").startswith(BACKDOOR_INVITE_CODE): # 后门邀请码
+            # 查重
+            user_check = User.objects.filter(username=data.get("phone"))
+            if len(user_check):
+                return JsonResponse({
+                    "status": 1,
+                    "message": "手机号{}已注册, 如有问题请致电400咨询.".format(data.get("phone"))
+                })
+            user_check = User.objects.filter(username=data.get("email"))
+            if len(user_check):
+                return JsonResponse({
+                    "status": 2,
+                    "message": "邮箱{}已注册, 如有问题请致电400咨询.".format(data.get("email"))
+                })
             user = User.objects.create_user(
                 username = data.get("phone"),
                 last_name = data.get("name"),
@@ -31,7 +45,8 @@ def api(req):
             users = Users(
                 user = user,
                 inviteCode = 'backdoor',
-                company = data.get("inviteCode")[7:]
+                company = data.get("inviteCode")[8:],
+                title = data.get("title"),
             )
             users.save()
             addUserToUdesk({
@@ -41,10 +56,7 @@ def api(req):
                     "cellphones": [
                         [None, data.get("phone")]
                     ],
-                    "description": json.dumps({
-                        "公司": data.get("inviteCode")[7:],
-                        "职务": ""
-                    })
+                    "description": data.get("inviteCode")[8:]+"/"+data.get("title")
                 }
             })
             return JsonResponse({
@@ -67,6 +79,19 @@ def api(req):
                 })
             else:
                 # todo 使用事务
+                # 查重
+                user_check = User.objects.filter(username=data.get("phone"))
+                if len(user_check):
+                    return JsonResponse({
+                        "status": 1,
+                        "message": "手机号{}已注册, 如有问题请致电400咨询.".format(data.get("phone"))
+                    })
+                user_check = User.objects.filter(username=data.get("email"))
+                if len(user_check):
+                    return JsonResponse({
+                        "status": 2,
+                        "message": "邮箱{}已注册, 如有问题请致电400咨询.".format(data.get("email"))
+                    })
                 user = User.objects.create_user(
                     username=data.get("phone"),
                     last_name=data.get("name"),
@@ -77,7 +102,8 @@ def api(req):
                 users = Users(
                     user=user,
                     inviteCode=inviteCode.code,
-                    company=inviteCode.company
+                    company=inviteCode.company,
+                    title = data.get("title"),
                 )
                 users.save()
                 inviteCode.active = False
@@ -90,10 +116,7 @@ def api(req):
                         "cellphones": [
                             [None, data.get("phone")]
                         ],
-                        "description": json.dumps({
-                            "公司": inviteCode.company,
-                            "职务": ""
-                        })
+                        "description": inviteCode.company+"/"+data.get("title")
                     }
                 })
                 return JsonResponse({
@@ -144,6 +167,7 @@ def updateUserInfo(req):
                 "message": "邮箱{}已注册, 如有问题请致电咨询.".format(user_check.email)
             })
         else:
+            users = Users.objects.get(user=req.user)
             # 同步udesk
             info = {"customer": {}}
             if user.username != data.get("phone"):
@@ -152,6 +176,10 @@ def updateUserInfo(req):
                 info["customer"]["nick_name"] = data.get("name")
             if user.email != data.get("email"):
                 info["customer"]["email"] = data.get("email")
+            if users.title != data.get("title"):
+                info["customer"]["description"] = users.company + "/" + data.get("title")
+                users.title = data.get("title")
+                users.save()
             if info["customer"]:
                 r = putApi("open_api_v1/customers/update_customer", params={
                     "type": "cellphone",
