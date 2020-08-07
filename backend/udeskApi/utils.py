@@ -83,6 +83,26 @@ def postApiV1(url, data=dict(), params=dict()):
     return r.json()
 
 
+def webImSignature(phone):
+    timestamp = int(time.time())
+    nonce = uuid.uuid1()
+    nonce = str(nonce).replace("-","")
+    sha1 = hashlib.sha1()
+    sha1.update("nonce={}&timestamp={}&web_token={}&{}".format( # see http://www.udesk.cn/doc/thirdparty/webim/#-_4
+        nonce,
+        timestamp,
+        phone,
+        UDESK["web_im_key"]
+    ).encode('utf-8'))
+    signature = sha1.hexdigest().upper()
+    return "&timestamp={}&signature={}&nonce={}&web_token={}".format(
+        timestamp,
+        signature,
+        nonce,
+        phone,
+    )
+
+
 if __name__ == "__main__":
     # r = postApi("open_api_v1/customers",{
     #     "customer":{
@@ -121,18 +141,20 @@ if __name__ == "__main__":
     # })
     # print(r)
 
-    ## 查询用户
-    r = getApi("open_api_v1/customers/get_customer", {
-        "type":"cellphone",
-        "content": "17710432234"
-    })
-    r = putApi("open_api_v1/customers/update_customer", params={
-        "type": "cellphone",
-        "content": "17710432234"
-    }, data={
-        "customer": {
-            "nick_name":"王永刚_改",
-        }
-    })
-    print(r)
+    # ## 查询用户
+    # r = getApi("open_api_v1/customers/get_customer", {
+    #     "type":"cellphone",
+    #     "content": "17710432234"
+    # })
+    # # r = putApi("open_api_v1/customers/update_customer", params={
+    # #     "type": "cellphone",
+    # #     "content": "17710432234"
+    # # }, data={
+    # #     "customer": {
+    # #         "nick_name":"王永刚_改",
+    # #     }
+    # # })
+    # print(r)
 
+    sign = webImSignature(17710432234)
+    print("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724&channel=项目咨询"+sign)

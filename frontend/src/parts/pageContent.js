@@ -151,40 +151,18 @@ class PageContent extends React.Component {
         <Row>
           <b>专家在线咨询(工作日10点-16点):</b>
         </Row>
-        <Row>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>方案咨询</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>项目合作</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>适配认证</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>赋能培训</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>联合宣传</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>整机板卡问题</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>课题申报</Button>
-          </Col>
-          <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-              <Button variant="success" size='lg' block
-                    onClick={() => {window.open("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724","_blank"); }}>其他问题</Button>
-          </Col>
-
+        <Row>{
+              ["方案咨询","项目合作","整机问题","其他问题"].map(channel=>(
+                <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
+                    <Button variant="success" size='lg' block
+                          onClick={() => {
+                            window.user?
+                              window.open(`https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724?channel=${channel}`,"_blank"):
+                              alert("请先登录");
+                          }}>{channel}</Button>
+                </Col>
+          ))
+        }
         </Row>
         <Row style={{marginTop:25}}>
           <b>我的工单:</b>
