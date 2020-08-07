@@ -360,7 +360,7 @@ class PageNav extends React.Component{
                   手机号
                 </Form.Label>
                 <Col sm={8}>
-                  <Form.Control required ref={this.loginForm.phone} placeholder="17710432234"/>
+                  <Form.Control required ref={this.loginForm.phone} placeholder="11位手机号"/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="passwd">
@@ -368,7 +368,7 @@ class PageNav extends React.Component{
                   服务密码
                 </Form.Label>
                 <Col sm={8}>
-                  <Form.Control required ref={this.loginForm.passwd} type="password" placeholder="请输入新密码"/>
+                  <Form.Control required ref={this.loginForm.passwd} type="password" placeholder="请输入密码"/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row}>
