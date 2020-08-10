@@ -36,6 +36,7 @@
           name: '{{user.last_name}}',
           email: '{{user.email}}',
           title: '{{user.users.title}}',
+          webim_sign: '{{webim_sign | safe}}',
         }
       {% else %}
         window.user = undefined

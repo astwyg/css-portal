@@ -394,7 +394,7 @@ class PageNav extends React.Component{
               <Form.Group as={Row}>
                 <Col sm={{span: 9, offset: 3}}>
                   <Button variant="primary" onClick={() => this.handleUpdateUserInfo()}>更新用户信息</Button> {' '}
-                  <Button variant="danger" onClick={(() => this.handleLogout())}>注销</Button>
+                  <Button variant="danger" onClick={(() => this.handleLogout())}>退出登录</Button>
                 </Col>
               </Form.Group>
             </Form>

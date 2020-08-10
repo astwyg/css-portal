@@ -84,7 +84,7 @@ def postApiV1(url, data=dict(), params=dict()):
 
 
 def webImSignature(phone):
-    timestamp = int(time.time())
+    timestamp = int(time.time())*1000
     nonce = uuid.uuid1()
     nonce = str(nonce).replace("-","")
     sha1 = hashlib.sha1()
@@ -95,11 +95,13 @@ def webImSignature(phone):
         UDESK["web_im_key"]
     ).encode('utf-8'))
     signature = sha1.hexdigest().upper()
-    return "&timestamp={}&signature={}&nonce={}&web_token={}".format(
-        timestamp,
-        signature,
-        nonce,
+    return "c_phone={}&nonce={}&signature={}&timestamp={}&web_token={}&{}".format(
         phone,
+        nonce,
+        signature,
+        timestamp,
+        phone,
+        UDESK["web_im_key"]
     )
 
 
@@ -157,4 +159,4 @@ if __name__ == "__main__":
     # print(r)
 
     sign = webImSignature(17710432234)
-    print("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724&channel=项目咨询"+sign)
+    print("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724&channel=项目咨询&"+sign)
