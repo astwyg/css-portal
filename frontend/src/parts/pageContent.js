@@ -151,16 +151,20 @@ class PageContent extends React.Component {
         <Row>
           <b>专家在线咨询(工作日10点-16点):</b>
         </Row>
-        <Row>{
-              ["方案咨询","项目合作","整机问题","其他问题"].map(channel=>(
-                <Col sm={3} xs={6} style={{margin:"15px 0 0 0"}}>
-                    <Button variant="success" size='lg' block
-                          onClick={() => {
-                            window.user?
-                              window.open(`https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724?channel=${channel}${window.user.webim_sign}`,"_blank"):
-                              alert("请先登录");
-                          }}>{channel}</Button>
-                </Col>
+        <Row>
+          {
+            [
+              "方案咨询","项目合作","认证适配","整机问题","课题申报",
+              "产品销售","赋能培训","投融资相关","English Service","其他问题"
+            ].map(channel=>(
+              <Col sm={6} xs={6} style={{margin:"15px 0 0 0"}}>
+                <Button variant="success" size='lg' block
+                  onClick={() => {
+                    window.user?
+                      window.open(`https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724?channel=${channel}${window.user.webim_sign}`,"_blank"):
+                      alert("请先登录");
+                  }}>{channel}</Button>
+              </Col>
           ))
         }
         </Row>

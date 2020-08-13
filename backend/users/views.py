@@ -9,6 +9,7 @@ from .models import Users
 from inviteCode.models import InviteCode
 from udeskApi.utils import postApi, getApi, putApi
 from backend.config import BACKDOOR_INVITE_CODE
+from udeskApi.utils import webImSignature
 
 
 def addUserToUdesk(customer):
@@ -131,8 +132,17 @@ def do_login(req):
         user = authenticate(username=data['phone'], password=data['passwd'])
         if user is not None:
             login(req, user)
+            users = Users.objects.get(user=user)
             return JsonResponse({
-                "status": 0
+                "status": 0,
+                "message":{
+                    "username":user.username,
+                    "name":user.last_name,
+                    "email":user.email,
+                    "company":users.company,
+                    "title":users.title,
+                    "webim_sign": "&" + webImSignature(user.username)
+                }
             })
         else:
             return JsonResponse({
