@@ -1,0 +1,61 @@
+// Override default variables before the import
+
+//$primary:       tomato !default;
+//$secondary:     $gray-600 !default;
+//$success:       $green !default;
+//$info:          $cyan !default;
+//$warning:       $yellow !default;
+//$danger:        $red !default;
+//$light:         $gray-100 !default;
+//$dark:          $gray-800 !default;
+
+$primary: #3ec89d;
+$secondary: #3ab7ff;
+$success: #65ff9f;
+$info: #7164ff;
+$warning: #ff9f65;
+$danger: #ff457b;
+$light: #f2d4ff;
+$dark: #18181d;
+
+p {
+  padding: 1em 0;
+}
+
+.jumbotron-cover {
+  background:url(/img/banner.jpg);
+  textAlign: 'left';
+}
+
+.btn-read-more {
+  width: 12em;
+  height: 3em;
+}
+
+.btn-service {
+  width: 6em;
+  height: 3em;
+}
+
+.important-text {
+  font-weight: bold;
+  color: tomato;
+}
+
+.center-title {
+  display: flex;
+  justify-content: center;
+  margin: 1em
+}
+
+.title-line {
+  border-top:2px solid #B31A23;
+  width:5em;
+  margin:0 auto;
+}
+
+// Import Bootstrap and its default variables
+@import "./index.scss";
+@import "./animate.scss";
+@import '~bootstrap/scss/bootstrap.scss';
+

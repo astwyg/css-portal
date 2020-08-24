@@ -7,6 +7,7 @@
     "console-polyfill": "^0.3.0",
     "cra-template": "1.0.3",
     "es5-shim": "^4.5.14",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
@@ -14,10 +15,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "lint": "eslint --ext .js --ext .jsx src"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,7 +38,13 @@
   },
   "proxy": "http://123.150.8.50:8000/",
   "devDependencies": {
-    "npm-watch": "^0.6.0"
+    "npm-watch": "^0.6.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-standard": "^4.0.1"
   },
   "watch": {
     "build": {

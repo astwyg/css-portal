@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+// Phytium Style
+.btn {
+  font-weight: bold;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color:#B31A23;
+  border: #B31A23;
+}
+
+.btn-primary:hover {
+  background-color: #fff;
+  color:#B31A23;
+  border: #fff;
+}
+
+.btn-success {
+  color: #666666;
+  background-color:#D9D9D9;
+  border: #D9D9D9;
+  border-radius: 2em;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color:#B31A23;
+  border: #B31A23;
+}

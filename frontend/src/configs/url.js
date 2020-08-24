@@ -1,15 +1,16 @@
+import { BACKEND_SERVER } from './secrets'
 
-const host = 'http://123.150.8.50:8000/';
+const host = BACKEND_SERVER
 
-let url = {
-  users: host+'users/',
-  checkInviteCode: host+'inviteCode/check/',
-  login: host+'login/',
-  logout: host+'logout/',
-  updateUserInfo: host+'updateUserInfo/',
+const url = {
+  users: `${host}/users/`,
+  checkInviteCode: `${host}/inviteCode/check/`,
+  login: `${host}/login/`,
+  logout: `${host}/logout/`,
+  updateUserInfo: `${host}/updateUserInfo/`,
 
-  saasApiGetTickets: host+'saasApi/getTickets/',
-  saasApiGetKnowledges: host+'saasApi/getKnowledges/',
-};
+  saasApiGetTickets: `${host}/saasApi/getTickets/`,
+  saasApiGetKnowledges: `${host}/saasApi/getKnowledges/`
+}
 
-export default url;
+export default url
