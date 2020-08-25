@@ -1,13 +1,13 @@
-import React from 'react';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import PageNav from './parts/pageNav';
-import PageContent from './parts/pageContent';
-import PageFooter from './parts/pageFooter';
+import React from 'react'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import './App.scss'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import PageNav from './parts/pageNav'
+import PageContent from './parts/pageContent'
+import PageFooter from './parts/pageFooter'
 
-function App() {
+function App () {
   return (
     <div className="App">
       <Container>
@@ -17,9 +17,8 @@ function App() {
           <PageFooter/>
         </Row>
       </Container>
-
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
