@@ -38,7 +38,7 @@ td {
 }
 
 .jumbotron-cover {
-  background:url(/img/banner.jpg);
+  background:url(/static/img/banner.jpg);
   textAlign: 'left';
 }
 
@@ -88,4 +88,3 @@ td {
 @import "./index.scss";
 @import "./animate.scss";
 @import '~bootstrap/scss/bootstrap.scss';
-
