@@ -220,17 +220,10 @@ class PageNav extends React.Component {
     return (
       <Container>
         <Row>
-          <Col xs={12} sm={4} style={{
-            textAlign: 'left',
-            margin: '2em'
-          }}>
-            <img src="/img/logo.png" alt="logo"/>
+          <Col xs={12} sm={6} style={{ textAlign: 'right', margin: '2em' }}>
+            <Row> <img src="/img/logo2.png" alt="logo"/> <span className='header-title'>飞腾新基建服务保障平台</span> </Row>
           </Col>
-          <Col xs={12} sm={8} style={{
-            textAlign: 'right',
-            flex: 1,
-            margin: '2em'
-          }}>
+          <Col xs={12} sm={6} style={{ textAlign: 'right', flex: 1, margin: '2em' }}>
             {
               window.user
                 ? <><Button variant="secondary" size='sm' onClick={() => this.handleLoadUserinfo()}>用户信息</Button></>
