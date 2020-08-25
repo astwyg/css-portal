@@ -131,23 +131,25 @@ class PageContent extends React.Component {
           textAlign: 'left'
         }}>
           <Jumbotron className='jumbotron-cover'>
-            <h1>欢迎!</h1>
-            <p>
+            <div className='zoomIn animated'>
+              <h1>欢迎!</h1>
+              <p>
               随着我国新基建和信息应用技术创新等领域不断发展，
               天津飞腾信息技术有限公司希望可以为生态伙伴在新基建进程中，
               提供更好的咨询服务、技术支持和售后保障服务，并形成常态化和信息化支撑机制，
               因此，决定成立飞腾新基建服务保障联盟。
-            </p>
-            <p>
-              成为飞腾新基建服务保障联盟会员，可以使用本平台全部功能，并可优先通过400-xxxx获取专家电话支持。
-            </p>
-            <p>
-              <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾新基建服务保障联盟章程.pdf', '_blank')}>查看联盟章程</Button>
-            </p>
+              </p>
+              <p>
+                成为飞腾新基建服务保障联盟会员，可以使用本平台全部功能，并可优先通过 <span className='important-text'>400-9221-666</span> 获取专家电话支持。
+              </p>
+              <p>
+                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾新基建服务保障联盟章程.pdf', '_blank')}>查看联盟章程</Button>
+              </p>
+            </div>
           </Jumbotron>
         </Row>
         <Row className='center-title'>
-          <h3>专家在线咨询(工作日10点-16点)</h3>
+          <h4>专家在线咨询(工作日10点-16点)</h4>
         </Row>
         <Row className='center-title'>
           <div className="title-line"></div>
@@ -162,7 +164,7 @@ class PageContent extends React.Component {
               '联合宣传', '整机板卡问题', '课题申报', '其他问题'
             ].map((channel, index) => (
               <Col key={index} lg={3} sm={6} xs={6} style={{ margin: '1em 0' }}>
-                <Button variant="success" className='btn-service' block
+                <Button variant="light" className='btn-service'
                   onClick={() => {
                     window.user
                       ? window.open(`https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724?channel=${channel}${window.user.webim_sign}`, '_blank')
@@ -173,7 +175,7 @@ class PageContent extends React.Component {
           }
         </Row>
         <Row className='center-title' style={{ marginTop: '2em' }}>
-          <h3>我的工单</h3>
+          <h4>我的工单</h4>
         </Row>
         <Row className='center-title'>
           <div className="title-line"></div>
@@ -199,7 +201,7 @@ class PageContent extends React.Component {
                       ticket.status === 'open'
                         ? <Button variant="outline-danger" size='sm'
                           onClick={() => this.handleShowTicket(ticket)}>正在处理</Button>
-                        : <Button variant="outline-success" size='sm'
+                        : <Button variant="outline-dark" size='sm'
                           onClick={() => this.handleShowTicket(ticket)}>已完成</Button>
                     }</td>
                   </tr>)
@@ -212,7 +214,7 @@ class PageContent extends React.Component {
           </Table>
         </Row>
         <Row className='center-title' style={{ marginTop: '2em' }}>
-          <h3>知识库</h3>
+          <h4>知识库</h4>
         </Row>
         <Row className='center-title'>
           <div className="title-line"></div>
@@ -224,11 +226,11 @@ class PageContent extends React.Component {
           }}>
             {window.user
               ? this.state.knowledges.map(knowledge => {
-                return (<ListGroup.Item action onClick={() => this.handleShowKnowledge(knowledge)}>
+                return (<ListGroup.Item action onClick={() => this.handleShowKnowledge(knowledge)} className='item-highlight' >
                   {knowledge.title}
                 </ListGroup.Item>)
               })
-              : <ListGroup.Item action>
+              : <ListGroup.Item action className='item-highlight'>
                 请登录后查看知识库
               </ListGroup.Item>
             }

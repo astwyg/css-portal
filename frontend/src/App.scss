@@ -37,7 +37,10 @@
   }
 }
 
+///////////////
 // Phytium Style
+///////////////
+
 .btn {
   font-weight: bold;
 }
@@ -54,15 +57,45 @@
   border: #fff;
 }
 
-.btn-success {
+.btn-secondary {
+  color: #000;
+  background-color:#fff;
+  border: #fff;
+}
+
+.btn-secondary:hover {
+  color: #B31A23;
+  background-color:#fff;
+  border: #fff;
+}
+
+.btn-secondary:focus {
+  color: #B31A23;
+  background-color:#fff;
+  border: #fff;
+}
+
+.btn-light {
   color: #666666;
   background-color:#D9D9D9;
   border: #D9D9D9;
   border-radius: 2em;
 }
 
-.btn-success:hover {
+.btn-light:hover {
   color: #fff;
   background-color:#B31A23;
   border: #B31A23;
+}
+
+.item-highlight {
+  color: #666666;
+  background-color:#fff;
+  border:1px solid #D9D9D9;
+}
+
+.item-highlight:hover {
+  color: #fff;
+  background-color:#EB6161;
+  border:1px solid #EB6161;
 }

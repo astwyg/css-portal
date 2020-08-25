@@ -222,24 +222,21 @@ class PageNav extends React.Component {
         <Row>
           <Col xs={12} sm={4} style={{
             textAlign: 'left',
-            margin: '10px',
-            fontSize: 'large'
+            margin: '2em'
           }}>
-            <b>飞腾新基建服务保障平台</b>
+            <img src="/img/logo.png" alt="logo"/>
           </Col>
           <Col xs={12} sm={8} style={{
             textAlign: 'right',
             flex: 1,
-            margin: '10px'
+            margin: '2em'
           }}>
             {
               window.user
-                ? <><Button variant="primary" size='sm' onClick={() => this.handleLoadUserinfo()}>用户信息</Button>{' '}</>
+                ? <><Button variant="secondary" size='sm' onClick={() => this.handleLoadUserinfo()}>用户信息</Button></>
                 : <>
-                  <Button variant="primary" size='sm'
-                    onClick={() => this.setState({ loginModalVisible: true })}>登录</Button>{' '}
-                  <Button variant="primary" size='sm'
-                    onClick={() => this.setState({ registModalVisible: true })}>注册</Button>{' '}
+                  <Button variant="secondary" size='sm' onClick={() => this.setState({ loginModalVisible: true })}>登录</Button>
+                  <Button variant="secondary" size='sm' onClick={() => this.setState({ registModalVisible: true })}>注册</Button>
                 </>
             }
           </Col>
