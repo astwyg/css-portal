@@ -20,6 +20,10 @@ import page.views as page_views
 import inviteCode.views as inviteCode_views
 import udeskApi.views as udeskApi_views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('', page_views.index),
     path('admin/', admin.site.urls),
@@ -35,4 +39,5 @@ urlpatterns = [
     path('saasApi/getKnowledges/', udeskApi_views.getKnowledges),
 
     path('admin/inviteCode/bulk_add/', inviteCode_views.batchCreate),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

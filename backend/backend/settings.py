@@ -123,6 +123,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATIC_ROOT= '/var/www/static/'
+
 
 # debug
 CORS_ORIGIN_ALLOW_ALL = True
