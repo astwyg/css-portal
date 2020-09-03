@@ -31,3 +31,4 @@ yarn-error.log*
 /tools/build
 /backend/db.sqlite3
 /backend/logs/*
+/frontend/.env

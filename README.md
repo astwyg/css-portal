@@ -18,5 +18,7 @@ python dependence in `/backend`
 5. (assuming you are using `CentOS Linux release 7.6.1810 (Core)`) install os dependencies: `yum install epel-release mysql-devel gcc gcc-devel python3-devel`
 6. prepare python env: `pip3 install virtualenv -i https://pypi.tuna.tsinghua.edu.cn/simple`, `pip install -r requirments.txt -i https://pypi.tuna.tsinghua.edu.cn/simple`, `pip3 install `
 7. prepare your django app: 1) copy your `config.py` to `/css-portal/backend/backend`. 2) RUN `python manage.py makemigration`, `python manage.py collectstatics`
-8. config gunicorn: `pip3 install gunicorn`, RUN `gunicorn --bind 0.0.0.0:81 --chdir /root/css-portal/backend/ wsgi`
+8. config gunicorn: `pip3 install gunicorn`, RUN `gunicorn --bind 127.0.0.1:9000 --chdir /root/css-portal/backend/ wsgi`
+9. `vim /etc/nginx/conf.d/default.conf`:
+
 
