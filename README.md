@@ -9,6 +9,10 @@ nodejs dependence in `/frontend`
 Phython == 3.8.4
 python dependence in `/backend`
 
+# debug
+
+use `//"proxy": "http://123.150.8.50:8000/",` in package.json, and set REACT_APP_BACKEND_SERVER in .env
+
 # deploy
 
 1. in `/frontend`, RUN `npm run build`
@@ -20,5 +24,21 @@ python dependence in `/backend`
 7. prepare your django app: 1) copy your `config.py` to `/css-portal/backend/backend`. 2) RUN `python manage.py makemigration`, `python manage.py collectstatics`
 8. config gunicorn: `pip3 install gunicorn`, RUN `gunicorn --bind 127.0.0.1:9000 --chdir /root/css-portal/backend/ wsgi`
 9. `vim /etc/nginx/conf.d/default.conf`:
+```
+server {
+    listen 81;
+    server_name nisp.phytium.com.cn;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location ^~/static/ {
+        root /var/www;
+        #proxy_pass http://127.0.0.1:9000;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:9000;
+    }
+}
+```
 
 
