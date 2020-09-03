@@ -8,3 +8,9 @@ nodejs dependence in `/frontend`
 
 Phython == 3.8.4
 python dependence in `/backend`
+
+# deploy
+
+1. in `/frontend`, RUN `npm run build`
+2. copy `/frontend/build/static/*` to `backend/static/*`
+3. rename the js files and css files link in `backend/page/templates/page/index.html`
