@@ -250,7 +250,7 @@ class PageNav extends React.Component {
                     </Form.Label>
                     <Col sm={9}>
                       <Form.Control required ref={this.newUserForm.inviteCode}
-                        onChange={() => this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行注册"/>
+                        onChange={() => this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行申请"/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="company">
