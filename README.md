@@ -42,3 +42,17 @@ server {
 ```
 
 
+everytime you update the static files, you have to run `python manage.py collectstatic` and restart gunicorn.
+
+
+# howto
+
+## 1)给MSS(市场,销售,支持)部门人员批量生成激活码权限
+
+增加新用户组MSS, 授予下列权限:
+
+* 用户|Can view user
+* 邀请码|Can add Users
+* invite code batch| 批量创建
+* invite code batch| Can view invite code batch
+* 平台用户| Can view Users

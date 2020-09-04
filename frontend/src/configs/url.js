@@ -1,6 +1,6 @@
 import { BACKEND_SERVER } from './secrets'
 
-const host = BACKEND_SERVER
+const host = BACKEND_SERVER;
 
 const url = {
   users: `${host}/users/`,

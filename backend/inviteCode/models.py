@@ -20,5 +20,8 @@ class InviteCode(models.Model):
 
 class InviteCodeBatch(models.Model):
     class Meta:
+        permissions = (
+            ("batch_create", "批量创建"),
+        )
         verbose_name_plural = '邀请码批量生成器(点我, 不允许在上面单独添加邀请码)'
 

@@ -47,7 +47,7 @@ class BatchCreateForm(forms.Form):
 
 def batchCreate(req):
     if req.method == 'GET':
-        if req.user.has_perm("inviteCode.add_InviteCode"):
+        if req.user.has_perm("inviteCode.batch_create"):
             form = BatchCreateForm
             return render(req, "inviteCode/bulk_add.html", locals())
         else:
