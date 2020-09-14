@@ -23,6 +23,6 @@ class InviteCodeAdmin(admin.ModelAdmin):
 
 
 @admin.register(InviteCodeBatch)
-class FeedbackStatsAdmin(admin.ModelAdmin):
+class InviteCodeBatchAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_content=None):
         return batchCreate(request)

@@ -16,6 +16,10 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="/static/manifest.json" />
+    {% if debug %}{% else %}
+    <link rel="stylesheet" type="text/css" href="/static/css/2.af3c1da9.chunk.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.e9c04d8e.chunk.css">
+    {% endif %}
     <!--
       Notice the use of  in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -26,6 +30,16 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>飞腾新基建服务保障平台</title>
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c7a8fc57e31b1cedb0eb53ae99b697fa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
   </head>
   <body>
     <script>
@@ -53,9 +67,15 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    {% if debug %}
     <script src="http://123.150.8.50:3000/static/js/bundle.js"></script>
     <script src="http://123.150.8.50:3000/static/js/0.chunk.js"></script>
     <script src="http://123.150.8.50:3000/static/js/1.chunk.js"></script>
     <script src="http://123.150.8.50:3000/static/js/main.chunk.js"></script>
+    {% else %}
+    <script src="/static/js/2.77f4ca0d.chunk.js"></script>
+    <script src="/static/js/main.bf72411c.chunk.js"></script>
+    <script src="/static/js/runtime-main.c8a21426.js"></script>
+    {% endif %}
   </body>
 </html>

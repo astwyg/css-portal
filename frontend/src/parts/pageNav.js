@@ -221,7 +221,7 @@ class PageNav extends React.Component {
       <Container>
         <Row>
           <Col xs={12} sm={6} style={{ textAlign: 'right', margin: '2em' }}>
-            <Row> <img src="/img/logo2.png" alt="logo"/> <span className='header-title'>飞腾新基建服务保障平台</span> </Row>
+            <Row> <img src="/static/img/logo2.png" alt="logo"/> <span className='header-title'>飞腾新基建服务保障平台</span> </Row>
           </Col>
           <Col xs={12} sm={6} style={{ textAlign: 'right', flex: 1, margin: '2em' }}>
             {
@@ -250,7 +250,7 @@ class PageNav extends React.Component {
                     </Form.Label>
                     <Col sm={9}>
                       <Form.Control required ref={this.newUserForm.inviteCode}
-                        onChange={() => this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行注册"/>
+                        onChange={() => this.handleCheckInviteCode()} placeholder="如果没有申请码请使用自行申请"/>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="company">
