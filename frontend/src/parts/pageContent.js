@@ -135,15 +135,15 @@ class PageContent extends React.Component {
               <h1>欢迎!</h1>
               <p>
               随着我国新基建和信息应用技术创新等领域不断发展，
-              天津飞腾信息技术有限公司希望可以为生态伙伴在新基建进程中，
-              提供更好的咨询服务、技术支持和售后保障服务，并形成常态化和信息化支撑机制，
+              天津飞腾信息技术有限公司希望为生态伙伴在新基建进程中，
+              提供更好的咨询服务、技术支持和售后保障，并形成常态化和信息化支撑机制，
               因此，决定成立飞腾新基建服务保障联盟。
               </p>
               <p>
                 成为飞腾新基建服务保障联盟会员，可以使用本平台全部功能，并可优先通过 <span className='important-text'>400-9221-666</span> 获取专家电话支持。
               </p>
               <p>
-                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾新基建服务保障联盟章程.pdf', '_blank')}>查看联盟章程</Button>
+                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/regulation.pdf', '_blank')}>查看联盟章程</Button>
               </p>
             </div>
           </Jumbotron>
