@@ -61,13 +61,13 @@ def batchCreate(req):
                 return JsonResponse({
                                 "status": 1,
                                 "message": "邀请码生成口令错误"
-                            })
+                            }, json_dumps_params={'ensure_ascii':False})
             number = form.cleaned_data["number"]
             if number < 5 or number > 200:
                 return JsonResponse({
                     "status": 2,
                     "message": "数量应在5-200"
-                })
+                }, json_dumps_params={'ensure_ascii':False})
             try:
                 codes = []
                 inviteCodes = []
@@ -97,5 +97,5 @@ def batchCreate(req):
                 return JsonResponse({
                     "status": 3,
                     "message": "{}".format(e)
-                })
+                }, json_dumps_params={'ensure_ascii':False})
 
