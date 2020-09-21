@@ -166,7 +166,7 @@ class PageContent extends React.Component {
                 <Button variant="light" className='btn-service'
                   onClick={() => {
                     window.user
-                      ? window.open(`https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724?channel=${channel}${window.user.webim_sign}`, '_blank')
+                      ? window.open(`https://phytium.s2.udesk.cn/im_client/?web_plugin_id=28724?channel=${channel}${window.user.webim_sign}`, '_blank')
                       : alert('请先登录')
                   }}>{channel}</Button>
               </Col>
