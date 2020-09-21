@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.contrib import messages
 
 from .models import Users
 
@@ -19,12 +20,15 @@ class UserAdmin(BaseUserAdmin):
     actions = ['make_MSS']
 
     def make_MSS(self, request, queryset):
-        group_MSS = Group.objects.get(name='MSS')
-        for user in queryset:
-            user.groups.add(group_MSS)
-            user.is_staff = True
-            user.save()
-        self.message_user(request, "{}个用户已被置为MSS权限".format(len(queryset)))
+        if not request.user.is_superuser:
+            self.message_user(request, "这个操作只有管理员可以进行, 请咨询行业解决方案部门董文静.".format(len(queryset)), level=messages.ERROR)
+        else:
+            group_MSS = Group.objects.get(name='MSS')
+            for user in queryset:
+                user.groups.add(group_MSS)
+                user.is_staff = True
+                user.save()
+            self.message_user(request, "{}个用户已被置为MSS权限".format(len(queryset)))
     make_MSS.short_description = "设置为MSS职位(市场,销售,支持), 可以批量发邀请码"
 
 # Re-register UserAdmin
