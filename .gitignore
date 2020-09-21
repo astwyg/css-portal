@@ -29,7 +29,6 @@ yarn-error.log*
 .idea
 /env
 *.pyc
-/backend/backend/config.py
 /tools/build
 /backend/db.sqlite3
 /backend/logs/*
