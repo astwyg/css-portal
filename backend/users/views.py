@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Users
 from inviteCode.models import InviteCode
 from udeskApi.utils import postApi, getApi, putApi
-from backend.config import BACKDOOR_INVITE_CODE
+from backend.configEnv import BACKDOOR_INVITE_CODE
 from udeskApi.utils import webImSignature
 
 

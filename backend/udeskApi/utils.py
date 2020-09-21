@@ -1,6 +1,6 @@
 import requests, hashlib, time, uuid, json
 from urllib.parse import urlencode, quote_plus
-from backend.config import UDESK
+from backend.configEnv import UDESK
 
 api_token = None
 

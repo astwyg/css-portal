@@ -30,6 +30,7 @@ yarn-error.log*
 /env
 *.pyc
 /tools/build
+/backend/backend/config.py
 /backend/db.sqlite3
 /backend/logs/*
 /backend/backend/.env

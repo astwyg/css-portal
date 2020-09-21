@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django import forms
 from .models import InviteCode
-from backend.config import BATCH_INVITE_SECRET
+from backend.configEnv import BATCH_INVITE_SECRET
 from django.contrib import messages
 
 from users.models import Users
