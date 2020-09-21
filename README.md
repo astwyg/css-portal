@@ -56,3 +56,14 @@ everytime you update the static files, you have to run `python manage.py collect
 * invite code batch| 批量创建
 * invite code batch| Can view invite code batch
 * 平台用户| Can view Users
+
+# Docker 
+
+## Django
+
+    git clone https://github.com/astwyg/css-portal.git
+    ./docker_build.sh
+    
+Run: add env to start shell as follows:
+
+    docker run --name my-nisp -p 9000:9000 -e DEBUG=True -e SECRET_KEY='' -e BATCH_INVITE_SECRET='' -e BACKDOOR_INVITE_CODE='' -e UDESK_ENTRY='' -e UDESK_ADMIN_EMAIL='' -e UDESK_ADMIN_PASSWD='' -e UDESK_V1_SECRET='' -e UDESK_V1_WEB_IM_KEY='' -e DB_NAME='' -e DB_USER='' -e DB_PASSWORD='' -e DB_HOST='' -e DB_PORT='' -d phytium/nisp-python:3-alpine3.12

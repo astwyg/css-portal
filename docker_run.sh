@@ -1,0 +1,2 @@
+docker stop my-nisp && docker rm my-nisp
+docker run --name my-nisp --ip 127.0.0.1 -p 9000:9000 -e DEBUG=True -e SECRET_KEY='' -e BATCH_INVITE_SECRET='' -e BACKDOOR_INVITE_CODE='' -e UDESK_ENTRY='' -e UDESK_ADMIN_EMAIL='' -e UDESK_ADMIN_PASSWD='' -e UDESK_V1_SECRET='' -e UDESK_V1_WEB_IM_KEY='' -e DB_NAME='' -e DB_USER='' -e DB_PASSWORD='' -e DB_HOST='' -e DB_PORT='' -d phytium/nisp-python:3-alpine3.12

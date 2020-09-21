@@ -159,4 +159,4 @@ if __name__ == "__main__":
     # print(r)
 
     sign = webImSignature(17710432234)
-    print("https://1396609.s2.udesk.cn/im_client/?web_plugin_id=28724&channel=项目咨询&"+sign)
+    print("https://phytium.s2.udesk.cn/im_client/?web_plugin_id=28724&channel=项目咨询&"+sign)

@@ -1,0 +1,10 @@
+workers=4
+threads=8
+bind='0.0.0.0:9000'
+worker_connections=2000
+# worker_class="gevent"
+pidfile='gunicorn.pid'
+accesslog='gunicorn_acess.log'
+errorlog='gunicorn_error.log'
+loglevel='error'
+reload=True
