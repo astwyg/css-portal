@@ -25,9 +25,9 @@ BACKDOOR_INVITE_CODE = env("BACKDOOR_INVITE_CODE")
 
 ###
 
-DEBUG = env("NISP_DEBUG")
+DEBUG = str(env("NISP_DEBUG")) == 'True'
 
-if DEBUG == 'True' :
+if DEBUG:
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     DATABASES = {
         'default': {
