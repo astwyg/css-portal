@@ -77,7 +77,7 @@ class PageNav extends React.Component {
 
   handleCreateUser () {
     if (!this.newUserForm.agree.current.checked) {
-      alert('您需要同意飞腾新基建服务保证联盟章程才能注册本平台.')
+      alert('您需要同意飞腾综合服务保障平台使用指南才能注册本平台.')
       return
     }
     if (!this.newUserForm.title.current.value) {
@@ -221,7 +221,7 @@ class PageNav extends React.Component {
       <Container>
         <Row>
           <Col xs={12} sm={6} style={{ textAlign: 'right', margin: '2em' }}>
-            <Row> <img src="/static/img/logo2.png" alt="logo"/> <span className='header-title'>飞腾新基建服务保障平台</span> </Row>
+            <Row> <img src="/static/img/logo2.png" alt="logo"/> <span className='header-title'>综合服务保障平台</span> </Row>
           </Col>
           <Col xs={12} sm={6} style={{ textAlign: 'right', flex: 1, margin: '2em' }}>
             {
@@ -237,7 +237,7 @@ class PageNav extends React.Component {
 
         <Modal show={this.state.registModalVisible} onHide={() => this.setState({ registModalVisible: false })}>
           <Modal.Header closeButton>
-            <Modal.Title>欢迎注册飞腾新基建服务保证平台</Modal.Title>
+            <Modal.Title>欢迎注册飞腾综合服务保障平台</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Tabs defaultActiveKey="invite">
@@ -302,11 +302,11 @@ class PageNav extends React.Component {
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="formHorizontalCheck">
-                    <Col sm={{ span: 2, offset: 3 }}>
-                      <Form.Check ref={this.newUserForm.agree} label='同意'/>
+                    <Col sm={{ span: 4, offset: 3 }}>
+                      <Form.Check ref={this.newUserForm.agree} label='我已阅读并支持'/>
                     </Col>
                     <Col>
-                      <a href="#" onClick={() => window.open('/static/飞腾新基建服务保障联盟章程.pdf', '_blank')}>飞腾新基建服务保证联盟章程</a>
+                      <a href="#" onClick={() => window.open('/static/飞腾综合服务保障平台使用指南.pdf', '_blank')}>使用指南</a>
                     </Col>
                   </Form.Group>
 
@@ -319,9 +319,9 @@ class PageNav extends React.Component {
               </Tab>
               <Tab eventKey="diy" title="自行申请">
                 <p>请按照如下步骤申请加入联盟:</p>
-                <p>1. 下载 <a href="#" onClick={() => window.open('/static/飞腾新基建服务保障联盟申请表.docx', '_blank')}>飞腾新基建服务保障联盟申请表</a>并填写、打印、盖章、扫描</p>
-                <p>2. 下载 <a href="#" onClick={() => window.open('/static/飞腾新基建服务保障联盟账号信息表.xlsx', '_blank')}>飞腾新基建服务保障联盟账号信息表</a>并填写</p>
-                <p>3. 请将上述第1项扫描件和第2项电子档发邮件到<a href="mailto:pnic@phytium.com.cn">pnic@phytium.com.cn</a></p>
+                <p>1. 下载 <a href="#" onClick={() => window.open('/static/飞腾综合服务保障平台申请表.docx', '_blank')}>飞腾综合服务保障平台申请表</a>并填写、打印、盖章、扫描</p>
+                <p>2. 下载 <a href="#" onClick={() => window.open('/static/飞腾综合服务保障平台账号信息表.xlsx', '_blank')}>飞腾综合服务保障平台账号信息表</a>并填写</p>
+                <p>3. 请将上述第1项扫描件和第2项电子档发邮件到<a href="mailto:csp@phytium.com.cn">csp@phytium.com.cn</a></p>
               </Tab>
             </Tabs>
           </Modal.Body>

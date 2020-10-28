@@ -134,16 +134,14 @@ class PageContent extends React.Component {
             <div className='zoomIn animated'>
               <h1>欢迎!</h1>
               <p>
-              随着我国新基建和信息应用技术创新等领域不断发展，
-              天津飞腾信息技术有限公司希望为生态伙伴在新基建进程中，
-              提供更好的咨询服务、技术支持和售后保障，并形成常态化和信息化支撑机制，
-              因此，决定成立飞腾新基建服务保障联盟。
+                飞腾综合服务保障平台为广大合作伙伴提供一站式、全流程、多层次综合服务保障。 <br/>
+                我们衷心期待与您共乘时代东风，共绘宏伟蓝图！
               </p>
               <p>
-                成为飞腾新基建服务保障联盟会员，可以使用本平台全部功能，并可优先通过 <span className='important-text'>400-9221-666</span> 获取专家电话支持。
+                成为会员，可以使用本平台全部功能，并可优先通过 <span className='important-text'>400-9221-666</span> 获取专家电话支持。
               </p>
               <p>
-                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/regulation.pdf', '_blank')}>查看联盟章程</Button>
+                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾综合服务保障平台使用指南.pdf', '_blank')}>查看使用指南</Button>
               </p>
             </div>
           </Jumbotron>
@@ -159,8 +157,8 @@ class PageContent extends React.Component {
             [
               // '方案咨询', '项目合作', '认证适配', '整机问题', '课题申报',
               // '产品销售', '赋能培训', '投融资相关', 'English Service', '其他问题'
-              '方案咨询', '项目合作', '适配认证', '赋能培训',
-              '联合宣传', '整机板卡问题', '课题申报', '其他问题'
+              '方案咨询', '项目合作', '适配认证', '整机相关',
+              '课题申报', '产品销售', '赋能培训', '其他问题'
             ].map((channel, index) => (
               <Col key={index} lg={3} sm={6} xs={6} style={{ margin: '1em 0' }}>
                 <Button variant="light" className='btn-service'
