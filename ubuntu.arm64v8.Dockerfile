@@ -80,6 +80,7 @@ RUN echo "**** Build Backend ****" && \
 RUN pip3 install gunicorn
 
 COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
+RUN nginx
 
 EXPOSE 80 9080 9000
 # CMD ["python3", "manage.py", "runserver", "0.0.0.0:9000"]
