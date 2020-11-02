@@ -14,7 +14,13 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt update && apt upgrade -y && apt install -y apt-utils
 RUN apt install -y build-essential libssl-dev libffi-dev python3-dev python3-pip curl gcc g++ make libmysqlclient-dev \
-    mysql-client nginx
+    mysql-client
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+RUN curl -sLO http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/pool/main/t/tzdata/tzdata_2020d-0ubuntu0.20.04_all.deb && dpkg -i tzdata_2020d-0ubuntu0.20.04_all.deb
+
+RUN apt install -y nginx
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs gyp
@@ -50,8 +56,6 @@ RUN echo "**** Init Backend ****" && \
 
 RUN echo "======"
 
-COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
-
 COPY ./backend /opt/app/backend/
 # RUN ls -la /opt/app/backend
 COPY ./frontend /opt/app/frontend/
@@ -61,6 +65,7 @@ WORKDIR /opt/app/frontend
 RUN echo "**** Build FrontEnd ****" && \
     npm run build && \
     cp -r ./build/static ../backend/ && \
+    cp ./build/index.html ../backend/static/ && \
     cp ./build/index.html ../backend/page/templates/page/
 
 WORKDIR /opt/app/backend
@@ -74,6 +79,8 @@ RUN echo "**** Build Backend ****" && \
 
 RUN pip3 install gunicorn
 
-EXPOSE [80, 9000]
+COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
+
+EXPOSE 80 9080 9000
 # CMD ["python3", "manage.py", "runserver", "0.0.0.0:9000"]
 CMD ["gunicorn", "backend.wsgi", "-c", "gun.conf.py"]
