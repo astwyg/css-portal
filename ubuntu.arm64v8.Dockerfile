@@ -18,7 +18,8 @@ RUN apt install -y build-essential libssl-dev libffi-dev python3-dev python3-pip
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
-RUN curl -sLO http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/pool/main/t/tzdata/tzdata_2020d-0ubuntu0.20.04_all.deb && dpkg -i tzdata_2020d-0ubuntu0.20.04_all.deb
+RUN curl -sLO http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/pool/main/t/tzdata/tzdata_2020d-0ubuntu0.20.04_all.deb && \
+    dpkg -i tzdata_2020d-0ubuntu0.20.04_all.deb
 
 RUN apt install -y nginx
 
@@ -65,7 +66,6 @@ WORKDIR /opt/app/frontend
 RUN echo "**** Build FrontEnd ****" && \
     npm run build && \
     cp -r ./build/static ../backend/ && \
-    cp ./build/index.html ../backend/static/ && \
     cp ./build/index.html ../backend/page/templates/page/
 
 WORKDIR /opt/app/backend
@@ -79,9 +79,21 @@ RUN echo "**** Build Backend ****" && \
 
 RUN pip3 install gunicorn
 
-COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
-RUN nginx
+# COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80 9080 9000
+RUN echo "**** Move Frontend File ****" && \
+    mv /var/www/static /var/www/html/
+
+EXPOSE 80 9000
+STOPSIGNAL SIGTERM
+
+RUN echo "#!/bin/bash" > /opt/app/backend/start.sh && \
+    echo "gunicorn backend.wsgi -c gun.conf.py" >> /opt/app/backend/start.sh && \
+    echo "service nginx start" >> /opt/app/backend/start.sh && \
+    echo "" >> /opt/app/backend/start.sh && \
+    chmod +x /opt/app/backend/start.sh
+
 # CMD ["python3", "manage.py", "runserver", "0.0.0.0:9000"]
-CMD ["gunicorn", "backend.wsgi", "-c", "gun.conf.py"]
+# CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "/opt/app/backend/start.sh"]
