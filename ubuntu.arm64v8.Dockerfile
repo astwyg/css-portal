@@ -85,7 +85,7 @@ COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 RUN echo "**** Move Frontend File ****" && \
     mv /var/www/static /var/www/html/
 
-EXPOSE 80 9000
+EXPOSE 9000 9980
 STOPSIGNAL SIGTERM
 
 RUN echo "#!/bin/bash" > /opt/app/backend/start.sh && \
