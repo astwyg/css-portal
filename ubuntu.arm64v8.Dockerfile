@@ -75,27 +75,15 @@ RUN echo "**** Build Backend ****" && \
     python3 manage.py migrate && \
     python3 manage.py collectstatic
 
-# RUN ls -la /opt/app/backend/static
-
-RUN pip3 install gunicorn
-
-# COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
+RUN echo "**** Nginx & gunicorn ****" && \
+    pip3 install gunicorn
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-RUN systemctl enable nginx
+RUN mv /var/www/static /var/www/html/
 
-RUN echo "**** Move Frontend File ****" && \
-    mv /var/www/static /var/www/html/
+RUN echo "**** Supervisor ****" && \
+    mkdir -p /var/log/supervisor
+COPY ./nginx/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 9000 9980
 STOPSIGNAL SIGTERM
-
-RUN echo "#!/bin/bash" > /opt/app/backend/start.sh && \
-    echo "gunicorn backend.wsgi -c gun.conf.py" >> /opt/app/backend/start.sh && \
-    echo "systemctl start nginx" >> /opt/app/backend/start.sh && \
-    echo "" >> /opt/app/backend/start.sh && \
-    chmod +x /opt/app/backend/start.sh
-
-# CMD ["gunicorn", "backend.wsgi", "-c", "gun.conf.py"]
-# CMD ["python3", "manage.py", "runserver", "0.0.0.0:9000"]
-# CMD ["nginx", "-g", "daemon off;"]
-CMD ["sh", "-c", "/opt/app/backend/start.sh"]
+CMD ["/usr/bin/supervisord"]
