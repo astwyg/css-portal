@@ -14,11 +14,11 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt update && apt upgrade -y && apt install -y apt-utils
 RUN apt install -y build-essential libssl-dev libffi-dev python3-dev python3-pip curl gcc g++ make libmysqlclient-dev \
-    mysql-client
+    mysql-client systemctl
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
-RUN curl -sLO http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/pool/main/t/tzdata/tzdata_2020d-0ubuntu0.20.04_all.deb && \
+RUN curl -sLO http://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/t/tzdata/tzdata_2020d-0ubuntu0.20.04_all.deb && \
     dpkg -i tzdata_2020d-0ubuntu0.20.04_all.deb
 
 RUN apt install -y nginx
@@ -81,6 +81,7 @@ RUN pip3 install gunicorn
 
 # COPY ./nginx/nginx_gunicorn.conf /etc/nginx/conf.d/nginx_gunicorn.conf
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+RUN systemctl enable nginx
 
 RUN echo "**** Move Frontend File ****" && \
     mv /var/www/static /var/www/html/
@@ -90,10 +91,11 @@ STOPSIGNAL SIGTERM
 
 RUN echo "#!/bin/bash" > /opt/app/backend/start.sh && \
     echo "gunicorn backend.wsgi -c gun.conf.py" >> /opt/app/backend/start.sh && \
-    echo "service nginx start" >> /opt/app/backend/start.sh && \
+    echo "systemctl start nginx" >> /opt/app/backend/start.sh && \
     echo "" >> /opt/app/backend/start.sh && \
     chmod +x /opt/app/backend/start.sh
 
+# CMD ["gunicorn", "backend.wsgi", "-c", "gun.conf.py"]
 # CMD ["python3", "manage.py", "runserver", "0.0.0.0:9000"]
 # CMD ["nginx", "-g", "daemon off;"]
 CMD ["sh", "-c", "/opt/app/backend/start.sh"]
