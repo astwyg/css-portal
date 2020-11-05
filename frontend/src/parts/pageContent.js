@@ -134,14 +134,14 @@ class PageContent extends React.Component {
             <div className='zoomIn animated'>
               <h1>欢迎!</h1>
               <p>
-                飞腾综合服务保障平台为广大合作伙伴提供一站式、全流程、多层次综合服务保障。 <br/>
+                飞腾新基建全国服务保障平台为广大合作伙伴提供一站式、全流程、多层次综合服务保障。 <br/>
                 我们衷心期待与您共乘时代东风，共绘宏伟蓝图！
               </p>
               <p>
                 成为会员，可以使用本平台全部功能，并可优先通过 <span className='important-text'>400-9221-666</span> 获取专家电话支持。
               </p>
               <p>
-                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾综合服务保障平台使用指南.pdf', '_blank')}>查看使用指南</Button>
+                <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾新基建全国服务保障平台使用指南.pdf', '_blank')}>查看使用指南</Button>
               </p>
             </div>
           </Jumbotron>
