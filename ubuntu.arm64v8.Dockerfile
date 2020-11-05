@@ -14,7 +14,7 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt update && apt upgrade -y && apt install -y apt-utils
 RUN apt install -y build-essential libssl-dev libffi-dev python3-dev python3-pip curl gcc g++ make libmysqlclient-dev \
-    mysql-client systemctl
+    mysql-client supervisor
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
