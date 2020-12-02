@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('projects', '0002_auto_20140903_0920'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
     ]
 
     operations = [
@@ -39,10 +39,10 @@ class Migration(migrations.Migration):
                 ('content', models.TextField(blank=True, verbose_name='content')),
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='created date')),
                 ('modified_date', models.DateTimeField(verbose_name='modified date')),
-                ('last_modifier', models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, verbose_name='last modifier', related_name='last_modified_wiki_pages', blank=True, on_delete=models.SET_NULL)),
-                ('owner', models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, verbose_name='owner', related_name='owned_wiki_pages', blank=True, on_delete=models.SET_NULL)),
+                ('last_modifier', models.ForeignKey(null=True, to=settings.TAIGA_USER_MODEL, verbose_name='last modifier', related_name='last_modified_wiki_pages', blank=True, on_delete=models.SET_NULL)),
+                ('owner', models.ForeignKey(null=True, to=settings.TAIGA_USER_MODEL, verbose_name='owner', related_name='owned_wiki_pages', blank=True, on_delete=models.SET_NULL)),
                 ('project', models.ForeignKey(verbose_name='project', related_name='wiki_pages', to='projects.Project', on_delete=models.CASCADE)),
-                ('watchers', models.ManyToManyField(null=True, related_name='wiki_wikipage+', blank=True, verbose_name='watchers', to=settings.AUTH_USER_MODEL)),
+                ('watchers', models.ManyToManyField(null=True, related_name='wiki_wikipage+', blank=True, verbose_name='watchers', to=settings.TAIGA_USER_MODEL)),
             ],
             options={
                 'ordering': ['project', 'slug'],

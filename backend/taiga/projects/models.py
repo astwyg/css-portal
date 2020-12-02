@@ -67,7 +67,7 @@ class Membership(models.Model):
     # assigned user.
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         default=None,
@@ -101,7 +101,7 @@ class Membership(models.Model):
                              verbose_name=_("token"))
 
     invited_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         related_name="ihaveinvited+",
         null=True,
         blank=True,
@@ -184,7 +184,7 @@ class Project(ProjectDefaults, TaggedMixin, TagsColorsMixin, models.Model):
     modified_date = models.DateTimeField(null=False, blank=False,
                                          verbose_name=_("modified date"))
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         related_name="owned_projects",
@@ -192,7 +192,7 @@ class Project(ProjectDefaults, TaggedMixin, TagsColorsMixin, models.Model):
         on_delete=models.SET_NULL,
     )
 
-    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="projects",
+    members = models.ManyToManyField(settings.TAIGA_USER_MODEL, related_name="projects",
                                      through="Membership", verbose_name=_("members"),
                                      through_fields=("project", "user"))
     total_milestones = models.IntegerField(null=True, blank=True,

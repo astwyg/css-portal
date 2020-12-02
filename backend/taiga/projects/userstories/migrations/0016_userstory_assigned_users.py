@@ -9,7 +9,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('userstories', '0015_add_due_date'),
     ]
 
@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userstory',
             name='assigned_users',
-            field=models.ManyToManyField(blank=True, default=None, related_name='assigned_userstories', to=settings.AUTH_USER_MODEL, verbose_name='assigned users'),
+            field=models.ManyToManyField(blank=True, default=None, related_name='assigned_userstories', to=settings.TAIGA_USER_MODEL, verbose_name='assigned users'),
         ),
     ]

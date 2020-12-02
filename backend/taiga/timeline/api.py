@@ -97,7 +97,7 @@ class TimelineViewSet(ReadOnlyListViewSet):
 
 
 class ProfileTimeline(TimelineViewSet):
-    content_type = settings.AUTH_USER_MODEL.lower()
+    content_type = settings.TAIGA_USER_MODEL.lower()
     permission_classes = (permissions.UserTimelinePermission,)
 
     def get_timeline(self, user):
@@ -105,7 +105,7 @@ class ProfileTimeline(TimelineViewSet):
 
 
 class UserTimeline(TimelineViewSet):
-    content_type = settings.AUTH_USER_MODEL.lower()
+    content_type = settings.TAIGA_USER_MODEL.lower()
     permission_classes = (permissions.UserTimelinePermission,)
 
     def get_timeline(self, user):

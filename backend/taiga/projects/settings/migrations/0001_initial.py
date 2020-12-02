@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('projects', '0061_auto_20180918_1355'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('modified_at', models.DateTimeField()),
                 ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_project_settings', to='projects.Project')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_project_settings', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_project_settings', to=settings.TAIGA_USER_MODEL)),
             ],
             options={
                 'ordering': ['created_at'],

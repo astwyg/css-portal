@@ -51,7 +51,7 @@ class Application(models.Model):
 
 class ApplicationToken(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         blank=False,
         null=False,
         related_name="application_tokens",

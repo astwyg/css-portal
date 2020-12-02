@@ -87,7 +87,7 @@ class UserStory(OCCModelMixin, WatchedModelMixin, BlockedMixin, TaggedMixin, Due
         verbose_name=_("project"),
         on_delete=models.CASCADE,
     )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
+    owner = models.ForeignKey(settings.TAIGA_USER_MODEL, null=True, blank=True,
                               related_name="owned_user_stories", verbose_name=_("owner"),
                               on_delete=models.SET_NULL)
     status = models.ForeignKey("projects.UserStoryStatus", null=True, blank=True,
@@ -116,7 +116,7 @@ class UserStory(OCCModelMixin, WatchedModelMixin, BlockedMixin, TaggedMixin, Due
                                verbose_name=_("subject"))
     description = models.TextField(null=False, blank=True, verbose_name=_("description"))
     assigned_to = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         blank=True,
         null=True,
         default=None,
@@ -124,7 +124,7 @@ class UserStory(OCCModelMixin, WatchedModelMixin, BlockedMixin, TaggedMixin, Due
         verbose_name=_("assigned to"),
         on_delete=models.SET_NULL,
     )
-    assigned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
+    assigned_users = models.ManyToManyField(settings.TAIGA_USER_MODEL, blank=True,
                                     default=None, related_name="assigned_userstories",
                                     verbose_name=_("assigned users"))
     client_requirement = models.BooleanField(default=False, null=False, blank=True,

@@ -32,5 +32,5 @@ class UserAdmin(BaseUserAdmin):
     make_MSS.short_description = "设置为MSS职位(市场,销售,支持), 可以批量发邀请码"
 
 # Re-register UserAdmin
-admin.site.unregister(User)
+# admin.site.unregister(User) # when?
 admin.site.register(User, UserAdmin)

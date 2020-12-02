@@ -9,7 +9,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('projects', '0002_auto_20140903_0920'),
     ]
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('modified_at', models.DateTimeField()),
                 ('project', models.ForeignKey(to='projects.Project', related_name='notify_policies', on_delete=models.CASCADE)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='notify_policies', on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(to=settings.TAIGA_USER_MODEL, related_name='notify_policies', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['created_at'],

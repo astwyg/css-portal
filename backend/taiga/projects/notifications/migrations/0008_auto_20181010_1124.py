@@ -13,7 +13,7 @@ import taiga.base.db.models.fields.json
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('notifications', '0007_notifypolicy_live_notify_level'),
     ]
 
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('read', models.DateTimeField(default=None, null=True)),
                 ('event_type', models.PositiveIntegerField()),
                 ('data', taiga.base.db.models.fields.json.JSONField(encoder=django.core.serializers.json.DjangoJSONEncoder)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='web_notifications', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='web_notifications', to=settings.TAIGA_USER_MODEL)),
             ],
         ),
         migrations.AddField(

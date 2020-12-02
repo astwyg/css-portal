@@ -7,7 +7,7 @@ from django.conf import settings
 
 class Migration(migrations.Migration):
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('projects', '0002_auto_20140903_0920'),
     ]
 
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='membership',
             name='invited_by',
-            field=models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, blank=True, related_name='ihaveinvited+', on_delete=models.SET_NULL),
+            field=models.ForeignKey(null=True, to=settings.TAIGA_USER_MODEL, blank=True, related_name='ihaveinvited+', on_delete=models.SET_NULL),
             preserve_default=True,
         ),
 

@@ -10,7 +10,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
     dependencies = [
         ('contenttypes', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('projects', '0002_auto_20140903_0920'),
     ]
 
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name='description', blank=True)),
                 ('order', models.IntegerField(verbose_name='order', default=0)),
                 ('content_type', models.ForeignKey(verbose_name='content type', to='contenttypes.ContentType', on_delete=models.CASCADE)),
-                ('owner', models.ForeignKey(verbose_name='owner', null=True, related_name='change_attachments', to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)),
+                ('owner', models.ForeignKey(verbose_name='owner', null=True, related_name='change_attachments', to=settings.TAIGA_USER_MODEL, on_delete=models.SET_NULL)),
                 ('project', models.ForeignKey(verbose_name='project', related_name='attachments', to='projects.Project', on_delete=models.CASCADE)),
             ],
             options={

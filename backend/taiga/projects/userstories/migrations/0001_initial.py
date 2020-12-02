@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         ('issues', '__first__'),
         ('milestones', '__first__'),
         ('projects', '0002_auto_20140903_0920'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('users', '0003_auto_20140903_0925'),
     ]
 
@@ -52,14 +52,14 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('client_requirement', models.BooleanField(default=False, verbose_name='is client requirement')),
                 ('team_requirement', models.BooleanField(default=False, verbose_name='is team requirement')),
-                ('assigned_to', models.ForeignKey(null=True, verbose_name='assigned to', to=settings.AUTH_USER_MODEL, related_name='userstories_assigned_to_me', blank=True, default=None, on_delete=models.SET_NULL)),
+                ('assigned_to', models.ForeignKey(null=True, verbose_name='assigned to', to=settings.TAIGA_USER_MODEL, related_name='userstories_assigned_to_me', blank=True, default=None, on_delete=models.SET_NULL)),
                 ('generated_from_issue', models.ForeignKey(blank=True, null=True, verbose_name='generated from issue', to='issues.Issue', related_name='generated_user_stories', on_delete=models.SET_NULL)),
                 ('milestone', models.ForeignKey(null=True, verbose_name='milestone', to='milestones.Milestone', related_name='user_stories', blank=True, default=None, on_delete=models.SET_NULL)),
-                ('owner', models.ForeignKey(blank=True, null=True, verbose_name='owner', to=settings.AUTH_USER_MODEL, related_name='owned_user_stories', on_delete=models.CASCADE)),
+                ('owner', models.ForeignKey(blank=True, null=True, verbose_name='owner', to=settings.TAIGA_USER_MODEL, related_name='owned_user_stories', on_delete=models.CASCADE)),
                 ('points', models.ManyToManyField(through='userstories.RolePoints', related_name='userstories', to='projects.Points', verbose_name='points')),
                 ('project', models.ForeignKey(verbose_name='project', to='projects.Project', related_name='user_stories', on_delete=models.CASCADE)),
                 ('status', models.ForeignKey(blank=True, null=True, verbose_name='status', to='projects.UserStoryStatus', related_name='user_stories', on_delete=models.SET_NULL)),
-                ('watchers', models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='userstories_userstory+', blank=True, null=True, verbose_name='watchers')),
+                ('watchers', models.ManyToManyField(to=settings.TAIGA_USER_MODEL, related_name='userstories_userstory+', blank=True, null=True, verbose_name='watchers')),
             ],
             options={
                 'ordering': ['project', 'order', 'ref'],

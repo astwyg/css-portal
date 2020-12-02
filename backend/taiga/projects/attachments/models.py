@@ -35,7 +35,7 @@ def get_attachment_file_path(instance, filename):
 
 class Attachment(models.Model):
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         related_name="change_attachments",

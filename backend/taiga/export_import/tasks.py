@@ -38,7 +38,7 @@ from .renderers import ExportRenderer
 
 logger = logging.getLogger('taiga.export_import')
 
-import resource
+# import resource
 
 
 @app.task(bind=True)

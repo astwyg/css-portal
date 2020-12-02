@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('projects', '0056_auto_20161110_1518'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
     ]
 
     operations = [
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('comment', models.TextField(verbose_name='comment')),
                 ('created_date', models.DateTimeField(auto_now_add=True, verbose_name='created date')),
                 ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='contact_entries', to='projects.Project', verbose_name='project')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='contact_entries', to=settings.AUTH_USER_MODEL, verbose_name='user')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='contact_entries', to=settings.TAIGA_USER_MODEL, verbose_name='user')),
             ],
             options={
                 'verbose_name': 'contact entry',

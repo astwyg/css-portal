@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('projects', '0005_membership_invitation_extra_text'),
         ('history', '0004_historyentry_is_hidden'),
         ('notifications', '0001_initial'),
@@ -24,8 +24,8 @@ class Migration(migrations.Migration):
                 ('updated_datetime', models.DateTimeField(verbose_name='updated date time', auto_now_add=True)),
                 ('history_type', models.SmallIntegerField(choices=[(1, 'Change'), (2, 'Create'), (3, 'Delete')])),
                 ('history_entries', models.ManyToManyField(blank=True, null=True, to='history.HistoryEntry', verbose_name='history entries', related_name='+')),
-                ('notify_users', models.ManyToManyField(blank=True, null=True, to=settings.AUTH_USER_MODEL, verbose_name='notify users', related_name='+')),
-                ('owner', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='owner', on_delete=models.CASCADE)),
+                ('notify_users', models.ManyToManyField(blank=True, null=True, to=settings.TAIGA_USER_MODEL, verbose_name='notify users', related_name='+')),
+                ('owner', models.ForeignKey(related_name='+', to=settings.TAIGA_USER_MODEL, verbose_name='owner', on_delete=models.CASCADE)),
                 ('project', models.ForeignKey(related_name='+', to='projects.Project', verbose_name='project', on_delete=models.CASCADE)),
             ],
             options={

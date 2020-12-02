@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='historychangenotification',
             name='notify_users',
-            field=models.ManyToManyField(verbose_name='notify users', to=settings.AUTH_USER_MODEL, related_name='+'),
+            field=models.ManyToManyField(verbose_name='notify users', to=settings.TAIGA_USER_MODEL, related_name='+'),
         ),
     ]

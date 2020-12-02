@@ -49,7 +49,7 @@ class Vote(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=False,
         blank=False,
         related_name="votes",

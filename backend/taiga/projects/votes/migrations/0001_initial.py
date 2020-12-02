@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('contenttypes', '0001_initial'),
     ]
 
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('object_id', models.PositiveIntegerField()),
                 ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.CASCADE)),
-                ('user', models.ForeignKey(verbose_name='votes', to=settings.AUTH_USER_MODEL, related_name='votes', on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(verbose_name='votes', to=settings.TAIGA_USER_MODEL, related_name='votes', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'Vote',

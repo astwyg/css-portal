@@ -12,7 +12,7 @@ import taiga.projects.history.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('users', '0002_auto_20140903_0916'),
     ]
 
@@ -67,20 +67,20 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='members',
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='projects', verbose_name='members', through='projects.Membership'),
+            field=models.ManyToManyField(to=settings.TAIGA_USER_MODEL, related_name='projects', verbose_name='members', through='projects.Membership'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='project',
             name='owner',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='owned_projects', verbose_name='owner', on_delete=models.SET_NULL),
+            field=models.ForeignKey(to=settings.TAIGA_USER_MODEL, related_name='owned_projects', verbose_name='owner', on_delete=models.SET_NULL),
             preserve_default=True,
         ),
 
         migrations.AddField(
             model_name='membership',
             name='user',
-            field=models.ForeignKey(blank=True, default=None, to=settings.AUTH_USER_MODEL, null=True, related_name='memberships', on_delete=models.CASCADE),
+            field=models.ForeignKey(blank=True, default=None, to=settings.TAIGA_USER_MODEL, null=True, related_name='memberships', on_delete=models.CASCADE),
             preserve_default=True,
         ),
 

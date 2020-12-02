@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='epic',
             name='assigned_to',
-            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='epics_assigned_to_me', to=settings.AUTH_USER_MODEL, verbose_name='assigned to'),
+            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='epics_assigned_to_me', to=settings.TAIGA_USER_MODEL, verbose_name='assigned to'),
         ),
         migrations.AlterField(
             model_name='epic',

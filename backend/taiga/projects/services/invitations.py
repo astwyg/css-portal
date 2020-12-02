@@ -45,7 +45,7 @@ def find_invited_user(email, default=None):
     :return: The user if it's found, othwerwise return `default`.
     """
 
-    User = apps.get_model(settings.AUTH_USER_MODEL)
+    User = apps.get_model(settings.TAIGA_USER_MODEL)
 
     try:
         return User.objects.get(email=email)

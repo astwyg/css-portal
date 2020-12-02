@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('history', '0001_initial'),
     ]
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='historyentry',
             name='delete_comment_user',
-            field=models.ForeignKey(null=True, default=None, related_name='deleted_comments', to=settings.AUTH_USER_MODEL, blank=True, on_delete=models.CASCADE),
+            field=models.ForeignKey(null=True, default=None, related_name='deleted_comments', to=settings.TAIGA_USER_MODEL, blank=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inviteCode.apps.InvitecodeConfig',
     'corsheaders', #debug
+    'inviteCode.apps.InvitecodeConfig',
     'users.apps.UsersConfig',
     'page.apps.PageConfig',
     'udeskApi.apps.UdeskapiConfig',
@@ -209,3 +209,5 @@ LOGGING = {
         }
     },
 }
+
+AUTH_USER_MODEL = "auth.User"

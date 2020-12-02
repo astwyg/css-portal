@@ -16,34 +16,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 
-
-class ContactEntry(models.Model):
-    user = models.ForeignKey(
-        settings.TAIGA_USER_MODEL,
-        related_name="contact_entries",
-        verbose_name=_("user"),
-        on_delete=models.CASCADE
-    )
-
-    project = models.ForeignKey(
-        "projects.Project",
-        null=False,
-        blank=False,
-        related_name="contact_entries",
-        verbose_name=_("project"),
-        on_delete=models.CASCADE,
-    )
-
-    comment = models.TextField(null=False, blank=False, verbose_name=_("comment"))
-
-    created_date = models.DateTimeField(null=False, blank=False, auto_now_add=True,
-                                        verbose_name=_("created date"))
-
-    class Meta:
-        verbose_name = "contact entry"
-        verbose_name_plural = "contact entries"
-        ordering = ["-created_date", "id"]
+SR = {
+    "taigaio_url": "https://taiga.io",
+    "social": {
+        "twitter_url": "https://twitter.com/taigaio",
+        "github_url": "https://github.com/taigaio",
+    },
+    "support": {
+        "url": "https://tree.taiga.io/support/",
+        "email": "support@taiga.io"
+    },
+    "signature": "The Taiga Team",
+    "product_name": "Taiga",
+}

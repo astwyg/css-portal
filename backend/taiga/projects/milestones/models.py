@@ -39,7 +39,7 @@ class Milestone(WatchedModelMixin, models.Model):
     slug = models.SlugField(max_length=250, db_index=True, null=False, blank=True,
                             verbose_name=_("slug"))
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         related_name="owned_milestones",

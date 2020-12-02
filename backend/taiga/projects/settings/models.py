@@ -30,7 +30,7 @@ class UserProjectSettings(models.Model):
     project user notifications preference.
     """
     project = models.ForeignKey("projects.Project", related_name="user_project_settings", on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_project_settings", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.TAIGA_USER_MODEL, related_name="user_project_settings", on_delete=models.CASCADE)
     homepage = models.SmallIntegerField(choices=HOMEPAGE_CHOICES,
                                         default=Section.timeline)
 

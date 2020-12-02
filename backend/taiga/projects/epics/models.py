@@ -43,7 +43,7 @@ class Epic(OCCModelMixin, WatchedModelMixin, BlockedMixin, TaggedMixin, models.M
         on_delete=models.CASCADE,
     )
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         related_name="owned_epics",
@@ -69,7 +69,7 @@ class Epic(OCCModelMixin, WatchedModelMixin, BlockedMixin, TaggedMixin, models.M
                              default=generate_random_predefined_hex_color,
                              verbose_name=_("color"))
     assigned_to = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         blank=True,
         null=True,
         default=None,

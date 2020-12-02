@@ -43,7 +43,7 @@ class WikiPage(OCCModelMixin, WatchedModelMixin, models.Model):
     content = models.TextField(null=False, blank=True,
                                verbose_name=_("content"))
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         related_name="owned_wiki_pages",
@@ -51,7 +51,7 @@ class WikiPage(OCCModelMixin, WatchedModelMixin, models.Model):
         on_delete=models.SET_NULL,
     )
     last_modifier = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=True,
         blank=True,
         related_name="last_modified_wiki_pages",

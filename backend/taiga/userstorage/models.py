@@ -24,7 +24,7 @@ from taiga.base.db.models.fields import JSONField
 
 class StorageEntry(models.Model):
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         blank=False,
         null=False,
         related_name="storage_entries",

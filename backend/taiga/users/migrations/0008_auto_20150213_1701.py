@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='authdata',
             name='user',
-            field=models.ForeignKey(related_name='auth_data', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='auth_data', to=settings.TAIGA_USER_MODEL, on_delete=models.CASCADE),
         ),
     ]

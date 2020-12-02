@@ -35,7 +35,7 @@ class NotifyPolicy(models.Model):
     project user notifications preference.
     """
     project = models.ForeignKey("projects.Project", related_name="notify_policies", on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="notify_policies", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.TAIGA_USER_MODEL, related_name="notify_policies", on_delete=models.CASCADE)
     notify_level = models.SmallIntegerField(choices=NOTIFY_LEVEL_CHOICES)
     live_notify_level = models.SmallIntegerField(choices=NOTIFY_LEVEL_CHOICES, default=NotifyLevel.involved)
     web_notify_level = models.BooleanField(default=True, null=False, blank=True)
@@ -62,7 +62,7 @@ class HistoryChangeNotification(models.Model):
     """
     key = models.CharField(max_length=255, unique=False, editable=False)
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         null=False,
         blank=False,
         verbose_name=_("owner"),
@@ -76,7 +76,7 @@ class HistoryChangeNotification(models.Model):
     history_entries = models.ManyToManyField("history.HistoryEntry",
                                              verbose_name=_("history entries"),
                                              related_name="+")
-    notify_users = models.ManyToManyField(settings.AUTH_USER_MODEL,
+    notify_users = models.ManyToManyField(settings.TAIGA_USER_MODEL,
                                              verbose_name=_("notify users"),
                                              related_name="+")
     project = models.ForeignKey(
@@ -99,7 +99,7 @@ class Watched(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         blank=False,
         null=False,
         related_name="watched",
@@ -126,7 +126,7 @@ class WebNotification(models.Model):
     created = models.DateTimeField(default=timezone.now, db_index=True)
     read = models.DateTimeField(default=None, null=True)
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        settings.TAIGA_USER_MODEL,
         related_name="web_notifications",
         on_delete=models.CASCADE
     )

@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         ('userstories', '0012_auto_20160614_1201'),
         ('projects', '0049_auto_20160629_1443'),
         ('history', '0012_auto_20160629_1036'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
     ]
 
     operations = [
@@ -38,8 +38,8 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('client_requirement', models.BooleanField(default=False, verbose_name='is client requirement')),
                 ('team_requirement', models.BooleanField(default=False, verbose_name='is team requirement')),
-                ('assigned_to', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='epics_assigned_to_me', to=settings.AUTH_USER_MODEL, verbose_name='assigned to')),
-                ('owner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='owned_epics', to=settings.AUTH_USER_MODEL, verbose_name='owner')),
+                ('assigned_to', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='epics_assigned_to_me', to=settings.TAIGA_USER_MODEL, verbose_name='assigned to')),
+                ('owner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='owned_epics', to=settings.TAIGA_USER_MODEL, verbose_name='owner')),
                 ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='epics', to='projects.Project', verbose_name='project')),
                 ('status', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='epics', to='projects.EpicStatus', verbose_name='status')),
             ],

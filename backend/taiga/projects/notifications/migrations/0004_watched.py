@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('contenttypes', '0001_initial'),
         ('notifications', '0003_auto_20141029_1143'),
     ]
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('object_id', models.PositiveIntegerField()),
                 ('created_date', models.DateTimeField(verbose_name='created date', auto_now_add=True)),
                 ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.CASCADE)),
-                ('user', models.ForeignKey(related_name='watched', verbose_name='user', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(related_name='watched', verbose_name='user', to=settings.TAIGA_USER_MODEL, on_delete=models.CASCADE)),
                 ('project', models.ForeignKey(to='projects.Project', verbose_name='project', related_name='watched', on_delete=models.CASCADE)),
 
             ],

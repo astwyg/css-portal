@@ -62,7 +62,7 @@ def get_user_model_safe():
     Based on: https://github.com/django-oscar/django-oscar/blob/1.0/oscar/core/loading.py#L310-L340
     Ongoing Django issue: https://code.djangoproject.com/ticket/22872
     """
-    user_app, user_model = settings.AUTH_USER_MODEL.split('.')
+    user_app, user_model = settings.TAIGA_USER_MODEL.split('.')
 
     try:
         return apps.get_model(user_app, user_model)
@@ -346,7 +346,7 @@ class Role(models.Model):
 
 
 class AuthData(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="auth_data", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.TAIGA_USER_MODEL, related_name="auth_data", on_delete=models.CASCADE)
     key = models.SlugField(max_length=50)
     value = models.CharField(max_length=300)
     extra = JSONField()

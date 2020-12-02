@@ -18,7 +18,7 @@ def change_fk_with_tuple_pk_and_name(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.TAIGA_USER_MODEL),
         ('history', '0002_auto_20140916_0936'),
     ]
 
