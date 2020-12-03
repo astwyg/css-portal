@@ -42,6 +42,7 @@ urlpatterns = [
 
     path('admin/inviteCode/bulk_add/', inviteCode_views.batchCreate),
 
+    path('pm/', page_views.pm),
     path('taiga_api/v1/', include(router.urls)),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

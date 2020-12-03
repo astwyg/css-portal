@@ -8,3 +8,7 @@ def index(req):
     else:
         webim_sign = ""
     return render(req, 'page/index.html', locals())
+
+
+def pm(req):
+    return render(req, 'pm/index.html')
