@@ -22,7 +22,9 @@ import udeskApi.views as udeskApi_views
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import include, url
 
+from taiga.urls import router
 
 urlpatterns = [
     path('', page_views.index),
@@ -39,5 +41,7 @@ urlpatterns = [
     path('saasApi/getKnowledges/', udeskApi_views.getKnowledges),
 
     path('admin/inviteCode/bulk_add/', inviteCode_views.batchCreate),
+
+    path('taiga_api/v1/', include(router.urls)),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
