@@ -156,8 +156,8 @@ class PageContent extends React.Component {
         <Row>
           {
             [
-              '方案咨询', '项目合作', '适配认证', '校企合作',
-              '课题申报', '赋能培训', '产品销售', '其他问题'
+              '方案咨询', '项目合作', '赋能培训', '校企合作',
+              '课题申报', '适配认证', '产品销售', '其他问题'
             ].map((channel, index) => (
               <Col key={index} lg={3} sm={6} xs={6} style={{ margin: '1em 0' }}>
                 <Button variant="light" className='btn-service'
