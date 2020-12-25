@@ -138,8 +138,9 @@ class PageContent extends React.Component {
                 我们衷心期待与您共乘时代东风，共绘宏伟蓝图！
               </p>
               <p>
-                成为会员，可以使用本平台全部功能，并可优先通过 <span className='important-text'>400-9221-666</span> 获取专家电话支持。
+                合作伙伴仍可通过飞腾原有渠道和员工直接获取各方面技术支持，<br />另外也可以通过成为新基建服务保障平台会员，接入本服务网页和专家服务热线<span className='important-text'>400-9221-666</span> ，获得飞腾面向新基建更全面的方案咨询、项目合作、交付实施、赋能培训、校企合作等更广泛的支持。
               </p>
+
               <p>
                 <Button variant="primary" className='btn-read-more' onClick={() => window.open('/static/飞腾新基建全国服务保障平台使用指南.pdf', '_blank')}>查看使用指南</Button>
               </p>
