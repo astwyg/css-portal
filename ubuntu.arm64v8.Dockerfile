@@ -72,6 +72,7 @@ WORKDIR /opt/app/backend
 RUN echo "**** Build Backend ****" && \
     echo "  python3 version: $(python3 --version)" && \
     mkdir -p logs && \
+    python3 manage.py makemigrations && \
     python3 manage.py migrate && \
     python3 manage.py collectstatic
 
