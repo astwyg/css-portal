@@ -39,13 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inviteCode.apps.InvitecodeConfig',
-    'corsheaders', #debug
+    'oauth2_provider', # for oauth2
+    'corsheaders', # for oauth2
     'users.apps.UsersConfig',
     'page.apps.PageConfig',
     'udeskApi.apps.UdeskapiConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # for oauth2
     'page.middleware.DisableClientSideCachingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
