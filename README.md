@@ -74,3 +74,11 @@ Run: add env to start shell as follows:
     docker network create my-net
 
     docker run --name my-nisp --network my-net -p 9000:9000 -e DEBUG=True -e SECRET_KEY='' -e BATCH_INVITE_SECRET='' -e BACKDOOR_INVITE_CODE='' -e UDESK_ENTRY='' -e UDESK_ADMIN_EMAIL='' -e UDESK_ADMIN_PASSWD='' -e UDESK_V1_SECRET='' -e UDESK_V1_WEB_IM_KEY='' -e DB_NAME='' -e DB_USER='' -e DB_PASSWORD='' -e DB_HOST='' -e DB_PORT='' -d phytium/nisp-python:3-alpine3.12
+
+# 前端重构
+
+为了解决麒麟V10桌面版自带Firefox无法ajax.post携带cookies的问题, 以及更好的SEO和浏览器兼容性, 我们决定拆掉React架构前端, 采用传统前端技术.
+重构之后, 网站可以支持低至IE8, 主要采用下列工具/框架/技术:
+
+* bootstrap-3.4.1
+* jquery-1.12.4
