@@ -207,3 +207,9 @@ def updateUserInfo(req):
                 "status": 0,
                 "message": ""
             })
+
+
+def register_page(req):
+    if req.user.is_authenticated:
+        return redirect("/")
+    return render(req, 'users/register.html', locals())

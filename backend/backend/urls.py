@@ -28,6 +28,8 @@ urlpatterns = [
     path('', page_views.index),
     path("oauth2/", include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('admin/', admin.site.urls),
+
+    path("user/register/", users_views.register_page),
     path('users/', users_views.api),
     path('login/', users_views.do_login),
     path('logout/', users_views.do_logout),
