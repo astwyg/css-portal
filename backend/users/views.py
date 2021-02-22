@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 from .models import Users
 from inviteCode.models import InviteCode
@@ -128,22 +129,12 @@ def api(req):
 
 def do_login(req):
     if req.method == "POST":
-        data = json.loads(req.body)
+        data = req.POST
         user = authenticate(username=data['phone'], password=data['passwd'])
         if user is not None:
             login(req, user)
-            users = Users.objects.get(user=user)
-            return JsonResponse({
-                "status": 0,
-                "message":{
-                    "username":user.username,
-                    "name":user.last_name,
-                    "email":user.email,
-                    "company":users.company,
-                    "title":users.title,
-                    "webim_sign": "&" + webImSignature(user.username)
-                }
-            })
+            messages.add_message(req, messages.SUCCESS, "欢迎"+user.username)
+            return redirect(req.META.get("HTTP_REFERER","/"))
         else:
             return JsonResponse({
                 "status": 1,
@@ -153,9 +144,8 @@ def do_login(req):
 
 def do_logout(req):
     logout(req)
-    return JsonResponse({
-        "status": 0
-    })
+    messages.add_message(req, messages.SUCCESS, "已退出, 感谢您对飞腾的大力支持!")
+    return redirect("/")
 
 
 def updateUserInfo(req):
@@ -213,3 +203,16 @@ def register_page(req):
     if req.user.is_authenticated:
         return redirect("/")
     return render(req, 'users/register.html', locals())
+
+
+def login_page(req):
+    if req.user.is_authenticated:
+        return redirect("/")
+    return render(req, 'users/login.html', locals())
+
+
+def user_info_page(req):
+    if not req.user.is_authenticated:
+        messages.add_message(req, messages.WARNING, "请先登录")
+        return redirect("/")
+    return render(req, 'users/info.html', locals())

@@ -4,57 +4,67 @@
     <li><a href="/">首页</a></li>
     <li class="active">注册</li>
 </ol>
-
 <div class="row">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#invite" data-toggle="tab">邀请注册</a></li>
-        <li class=""><a href="#diy" data-toggle="tab">邀请注册</a></li>
-    </ul>
-</div>
-<div class="tab-content">
-    <div id="invite" class="tab-pane fade in active">
-        <form action="/users/" method="post">
-            <div class="form-group">
-                <label>邀请码</label>
-                <input type="text" class="form-control" id="inviteCode" placeholder="如果没有邀请码,请使用自行申请">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="row">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#invite" data-toggle="tab">邀请注册</a></li>
+                <li class=""><a href="#diy" data-toggle="tab">邀请注册</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="invite" class="tab-pane fade in active">
+                <form action="/users/" method="post">
+                    <div class="form-group">
+                        <label>邀请码</label>
+                        <input type="text" class="form-control" id="inviteCode" placeholder="如果没有邀请码,请使用自行申请">
+                    </div>
+                    <div class="form-group">
+                        <label>公司</label>
+                        <input type="text" class="form-control" id="company" value="请正确输入8位邀请码" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>职位</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label>手机号</label>
+                        <input type="text" class="form-control" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="text" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label>服务密码</label>
+                        <input type="password" class="form-control" id="passwd">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> 我已阅读并支持 <a href="/static/飞腾新基建全国服务保障平台使用指南.pdf" target="_blank">使用指南</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">注册</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label>公司</label>
-                <input type="text" class="form-control" id="company" value="请正确输入8位邀请码" disabled>
+            <div id="diy" class="tab-pane fade">
+                <h3>
+                    请按照如下步骤申请加入联盟:<br><br><br>
+                    1. 下载 <a href="/static/飞腾新基建全国服务保障平台申请表.docx" target="_blank">飞腾新基建全国服务保障平台申请表</a>并填写、打印、盖章、扫描 <br><br>
+                    2. 下载 <a href="/static/飞腾新基建全国服务保障平台账号信息表.xlsx">飞腾新基建全国服务保障平台账号信息表</a>并填写 <br><br>
+                    3. 请将上述第1项扫描件和第2项电子档发邮件到<a href="mailto:service@phytium.com.cn">service@phytium.com.cn</a><br>
+                </h3>
             </div>
-            <div class="form-group">
-                <label>职位</label>
-                <input type="text" class="form-control" id="title">
-            </div>
-            <div class="form-group">
-                <label>姓名</label>
-                <input type="text" class="form-control" id="name">
-            </div>
-            <div class="form-group">
-                <label>手机号</label>
-                <input type="text" class="form-control" id="phone">
-            </div>
-            <div class="form-group">
-                <label>邮箱</label>
-                <input type="text" class="form-control" id="email">
-            </div>
-            <div class="form-group">
-                <label>服务密码</label>
-                <input type="password" class="form-control" id="passwd">
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> 我已阅读并支持 <a href="/static/飞腾新基建全国服务保障平台使用指南.pdf" target="_blank">使用指南</a>
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary">注册</button>
-        </form>
+        </div>
+
+
     </div>
-    <div id="diy" class="tab-pane fade">
-        <h3>Menu 1</h3>
-        <p>Some content in menu 1.</p>
-    </div>
 </div>
+
 
 {% endblock %}
 

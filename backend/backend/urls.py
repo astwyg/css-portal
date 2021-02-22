@@ -30,6 +30,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path("user/register/", users_views.register_page),
+    path("user/login/", users_views.login_page),
+    path("user/info/", users_views.user_info_page),
     path('users/', users_views.api),
     path('login/', users_views.do_login),
     path('logout/', users_views.do_logout),

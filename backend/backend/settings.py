@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'page.apps.PageConfig',
     'udeskApi.apps.UdeskapiConfig',
+    "labManagement.apps.LabmanagementConfig",
+    "multiselectfield",
 ]
 
 MIDDLEWARE = [

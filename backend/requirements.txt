@@ -6,12 +6,13 @@ Django==3.0.8
 django-cors-headers==3.4.0
 django-cors-middleware==1.5.0
 django-environ==0.4.5
+django-multiselectfield==0.1.12
 django-oauth-toolkit==1.4.0
 future==0.18.2
 idna==2.10
 oauthlib==3.1.0
 pefile==2019.4.18
-#PyInstaller==3.6
+PyInstaller==3.6
 pytz==2020.1
 pywin32-ctypes==0.2.0
 requests==2.24.0
