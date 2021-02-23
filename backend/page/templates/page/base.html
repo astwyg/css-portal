@@ -18,10 +18,10 @@
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();</script>
-    <link rel="stylesheet" href="/static/css/bootstrap-3.4.1.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/bootstrap-3.4.1.min.css">
+    <link rel="stylesheet" href="/static/css/local_site.css">
 </head>
 <body>
-
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
         <div class="navbar-header">
@@ -40,7 +40,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="#">伙伴信息</a></li>
                 <li><a href="#">解决方案</a></li>
-                <li><a href="#">实验室资源</a></li>
+                <li><a href="/labManagement/">实验室资源</a></li>
                 <li><a href="#">项目管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -66,7 +66,9 @@
                 </div>
                 {% endfor %}
                 <div class="all-content">
+                    <div class="col-xs-12 col-sm-12">
                     {% block content %} {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,11 +83,9 @@
     </div><!--/row-->
 </div>
 
+<script src="/static/js/jquery-1.12.4.min.js"></script>
+<script src="/static/js/bootstrap-3.4.1.min.js"></script>
 {% block script %}{% endblock %}
-
-<script src="/static/js/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-<script src="/static/js/bootstrap-3.4.1.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
 
 </body>
 </html>

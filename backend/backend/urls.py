@@ -19,6 +19,7 @@ import users.views as users_views
 import page.views as page_views
 import inviteCode.views as inviteCode_views
 import udeskApi.views as udeskApi_views
+import labManagement.views as labManagment_views
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -44,5 +45,9 @@ urlpatterns = [
     path('saasApi/getKnowledges/', udeskApi_views.getKnowledges),
 
     path('admin/inviteCode/bulk_add/', inviteCode_views.batchCreate),
+
+    path("labManagement/", labManagment_views.index),
+    path("labManagement/add/", labManagment_views.add_page),
+    path("labManagement/listApi/", labManagment_views.listApi),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

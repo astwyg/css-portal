@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'udeskApi.apps.UdeskapiConfig',
     "labManagement.apps.LabmanagementConfig",
     "multiselectfield",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 TEMPLATES = [
     {

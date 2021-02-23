@@ -3,8 +3,10 @@ from django.db import models
 from users.models import Users
 from multiselectfield import MultiSelectField
 
+
 def get_default_user():
     return Users.objects.get(id=1)
+
 
 class Resource(models.Model):
     DOMAIN_CHOICES = (
@@ -67,12 +69,12 @@ class Resource(models.Model):
     machine_number = models.IntegerField("资源数量")
     machine_config = models.CharField("硬件配置", max_length=255)
     machine_env = models.CharField("软件要求", max_length=255)
-    remark = models.CharField("备注", max_length=255)
+    remark = models.TextField("备注", max_length=255)
     start_time = models.DateField("开始日期", default=datetime.date.today)
     end_time = models.DateField("结束日期")
     status = models.CharField("资源状态", choices=STATUS_CHOICES, max_length=20)
-    admin = models.ForeignKey(Users, on_delete=get_default_user, related_name="admin")
-    admin_note = models.CharField("管理员备注", max_length=1000, blank=True, null=True)
+    admin = models.ForeignKey(Users, on_delete=get_default_user, related_name="admin", blank=True, null=True)
+    admin_note = models.TextField("管理员备注", max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return str(self.project_name)
