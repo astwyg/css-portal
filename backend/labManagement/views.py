@@ -15,7 +15,7 @@ def add_page(req):
     if req.method == "GET":
         if not req.user.is_authenticated:
             messages.add_message(req, messages.WARNING, "请先登录")
-            return redirect("/")
+            return redirect(req.META.get('HTTP_REFERER','/'))
         form = ResourceForm()
         return render(req, "labManagement/add.html", locals())
     elif req.method == "POST":
@@ -27,7 +27,7 @@ def add_page(req):
             resource.status = "等待审批"
             resource.save()
             messages.add_message(req, messages.SUCCESS, "已提交, 我们正在加紧审批.")
-            return redirect("/labManagement/")
+            return redirect(req.META.get('HTTP_REFERER','/'))
         else:
             messages.add_message(req, messages.WARNING, "请修改表单中的错误")
             return render(req, "labManagement/add.html", locals())

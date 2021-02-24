@@ -22,21 +22,16 @@ def api(req):
     if req.method == 'GET':
         return HttpResponse("no GET method")
     elif req.method == 'POST': # 新建用户
-        data = json.loads(req.body)
+        data = req.POST
         if data.get("inviteCode").startswith(BACKDOOR_INVITE_CODE): # 后门邀请码
             # 查重
             user_check = User.objects.filter(username=data.get("phone"))
             if len(user_check):
-                return JsonResponse({
-                    "status": 1,
-                    "message": "手机号{}已注册, 如有问题请致电400咨询.".format(data.get("phone"))
-                })
+                messages.add_message(req, messages.ERROR, "手机号{}已注册, 如有问题请致电400咨询.".format(data.get("phone")))
+                return redirect(req.META.get('HTTP_REFERER', '/'))
             user_check = User.objects.filter(username=data.get("email"))
             if len(user_check):
-                return JsonResponse({
-                    "status": 2,
-                    "message": "邮箱{}已注册, 如有问题请致电400咨询.".format(data.get("email"))
-                })
+                messages.add_message(req, messages.ERROR, "邮箱{}已注册, 如有问题请致电400咨询.".format(data.get("email")))
             user = User.objects.create_user(
                 username = data.get("phone"),
                 last_name = data.get("name"),
@@ -61,24 +56,19 @@ def api(req):
                     "description": data.get("inviteCode")[8:]+"/"+data.get("title")
                 }
             })
-            return JsonResponse({
-                "status":0,
-                "message":"注册成功"
-            })
+            login(req, user)
+            messages.add_message(req, messages.SUCCESS, "欢迎"+user.last_name)
+            return redirect("/")
         else:
             # check invite code
             try:
                 inviteCode = InviteCode.objects.get(code=data.get("inviteCode"))
             except InviteCode.DoesNotExist:
-                return JsonResponse({
-                    "status": 1,
-                    "message": '激活码{}不存在'.format(data.get("inviteCode"))
-                })
+                messages.add_message(req, messages.ERROR, "激活码不存在")
+                return redirect(req.META.get('HTTP_REFERER','/'))
             if not inviteCode.active:
-                return JsonResponse({
-                    "status": 2,
-                    "message": '激活码{}无效'.format(data.get("inviteCode"))
-                })
+                messages.add_message(req, messages.ERROR, "激活码无效")
+                return redirect(req.META.get('HTTP_REFERER','/'))
             else:
                 # todo 使用事务
                 # 查重
@@ -121,10 +111,9 @@ def api(req):
                         "description": inviteCode.company+"/"+data.get("title")
                     }
                 })
-                return JsonResponse({
-                    "status": 0,
-                    "message": "注册成功"
-                })
+                login(req, user)
+                messages.add_message(req, messages.SUCCESS, "欢迎" + user.last_name)
+                return redirect("/")
 
 
 def do_login(req):
@@ -133,14 +122,11 @@ def do_login(req):
         user = authenticate(username=data['phone'], password=data['passwd'])
         if user is not None:
             login(req, user)
-            messages.add_message(req, messages.SUCCESS, "欢迎"+user.username)
+            messages.add_message(req, messages.SUCCESS, "欢迎"+user.last_name)
             return redirect(req.META.get("HTTP_REFERER","/"))
         else:
-            return JsonResponse({
-                "status": 1,
-                "message": "手机号和/或密码不正确"
-            })
-
+            messages.add_message(req, messages.ERROR, "手机号和/或密码不正确")
+            return redirect(req.META.get("HTTP_REFERER", "/"))
 
 def do_logout(req):
     logout(req)

@@ -14,38 +14,38 @@
         </div>
         <div class="tab-content">
             <div id="invite" class="tab-pane fade in active">
-                <form action="/users/" method="post">
+                <form action="/users/" method="post" id="register_form">
                     <div class="form-group">
                         <label>邀请码</label>
-                        <input type="text" class="form-control" id="inviteCode" placeholder="如果没有邀请码,请使用自行申请">
+                        <input type="text" class="form-control" name="inviteCode" placeholder="如果没有邀请码,请使用自行申请" oninput="code_check();">
                     </div>
                     <div class="form-group">
                         <label>公司</label>
-                        <input type="text" class="form-control" id="company" value="请正确输入8位邀请码" disabled>
+                        <input type="text" class="form-control" name="company" value="请正确输入8位邀请码" disabled>
                     </div>
                     <div class="form-group">
                         <label>职位</label>
-                        <input type="text" class="form-control" id="title">
+                        <input type="text" class="form-control" name="title">
                     </div>
                     <div class="form-group">
                         <label>姓名</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" name="name">
                     </div>
                     <div class="form-group">
                         <label>手机号</label>
-                        <input type="text" class="form-control" id="phone">
+                        <input type="text" class="form-control" name="phone">
                     </div>
                     <div class="form-group">
                         <label>邮箱</label>
-                        <input type="text" class="form-control" id="email">
+                        <input type="text" class="form-control" name="email">
                     </div>
                     <div class="form-group">
                         <label>服务密码</label>
-                        <input type="password" class="form-control" id="passwd">
+                        <input type="password" class="form-control" name="passwd">
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"> 我已阅读并支持 <a href="/static/飞腾新基建全国服务保障平台使用指南.pdf" target="_blank">使用指南</a>
+                            <input type="checkbox" name="checkbox"> 我已阅读并支持 <a href="/static/飞腾新基建全国服务保障平台使用指南.pdf" target="_blank">使用指南</a>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary">注册</button>
@@ -70,7 +70,64 @@
 
 {% block script %}
 <script>
+  $(document).ready(function(){
+    // 表单提交检查
+    $("#register_form").submit(function (e) {
+      if($("input[name='company']").val().length === 0 || $("input[name='company']").val()==="请正确输入8位邀请码" || $("input[name='inviteCode']").val().length === 0){
+        alert("请正确输入邀请码");
+        return false;
+      }
+      if($("input[name='title']").val().length === 0){
+        alert("请输入职位");
+        return false;
+      }
+      if($("input[name='name']").val().length === 0){
+        alert("请输入姓名");
+        return false;
+      }
+      if($("input[name='phone']").val().length === 0){
+        alert("请输入手机号");
+        return false;
+      }
+      if($("input[name='email']").val().length === 0){
+        alert("请输入邮箱");
+        return false;
+      }
+      if($("input[name='password']").val().length === 0){
+        alert("请输入密码");
+        return false;
+      }
+      if($("input[name='checkbox']").is(":checked") === false){
+        alert("请先阅读并同意使用指南");
+        return false;
+      }
+      return true;
+    });
+  });
 
+  // 邀请码检查
+  function code_check() {
+    if($("input[name='inviteCode']").val().length===8){
+      $.ajax({
+        url:"/inviteCode/check/",
+        type:"POST",
+        dataType : "json",
+        contentType: "application/json;charset=utf-8",
+        data : JSON.stringify({
+          code:$("input[name='inviteCode']").val()
+        }),
+        success : function(data) {
+          console.log(data.status);
+          if (data.status) {
+            alert(data.message);
+          } else {
+            $("input[name='company']").val(data.message);
+          }
+        },
+      })
+    }
+
+  }
 
 </script>
 {% endblock %}
