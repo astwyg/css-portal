@@ -43,7 +43,7 @@
             <div class="caption">
                 <h3>AI适配</h3>
                 <p>硬件加速卡适配</p>
-                <p style="height: 2em;">AI GPU GPGPU ...</p>
+                <p style="height: 2em;">AI GPU FPGA ...</p>
             </div>
         </div>
     </div>
@@ -78,6 +78,11 @@
 {% endblock %}
 
 {% block script %}
+<script>
+  $(document).ready(function(){
+    $("#nav_btn_labManagement").addClass("active");
+  });
+</script>
 {% if user.is_authenticated %}
 <script>
 

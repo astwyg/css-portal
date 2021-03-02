@@ -38,10 +38,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#">伙伴信息</a></li>
-                <li><a href="#">解决方案</a></li>
-                <li><a href="/labManagement/">实验室资源</a></li>
-                <li><a href="#">项目管理</a></li>
+                <li><a href="#" onclick="building();">伙伴信息</a></li>
+                <li><a href="#" onclick="building();">解决方案</a></li>
+                <li id="nav_btn_labManagement"><a href="/labManagement/">实验室资源</a></li>
+                <li><a href="#" onclick="building();">项目管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
@@ -85,6 +85,11 @@
 
 <script src="/static/js/jquery-1.12.4.min.js"></script>
 <script src="/static/js/bootstrap-3.4.1.min.js"></script>
+<script>
+    function building(){
+      alert("正在加紧开发该功能");
+    }
+</script>
 {% block script %}{% endblock %}
 
 </body>

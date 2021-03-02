@@ -8,6 +8,10 @@ def get_default_user():
     return Users.objects.get(id=1)
 
 
+def next_month():
+    return datetime.date.today()+datetime.timedelta(days=1)
+
+
 class Resource(models.Model):
     DOMAIN_CHOICES = (
         ("能源","能源"),
@@ -65,13 +69,13 @@ class Resource(models.Model):
     business = MultiSelectField("业务范围", choices=BUSINESS_CHOICES)
     region = MultiSelectField("项目所在区域", choices=REGION_CHOICES)
     location = models.CharField("项目所在地", max_length=1000)
-    machine_type = models.CharField("资源类型", max_length=10, choices=MACHINE_CHOICES)
-    machine_number = models.IntegerField("资源数量")
-    machine_config = models.CharField("硬件配置", max_length=255)
-    machine_env = models.CharField("软件要求", max_length=255)
+    machine_type = models.CharField("设备类型", max_length=10, choices=MACHINE_CHOICES)
+    machine_number = models.IntegerField("设备数量(台)")
+    machine_config = models.CharField("硬件配置", max_length=255, default="(4)核, (8)G RAM, (200)G SSD存储.")
+    machine_env = models.CharField("软件要求", max_length=255, default="麒麟V10 Server")
     remark = models.TextField("备注", max_length=255)
     start_time = models.DateField("开始日期", default=datetime.date.today)
-    end_time = models.DateField("结束日期")
+    end_time = models.DateField("结束日期", default=next_month)
     status = models.CharField("资源状态", choices=STATUS_CHOICES, max_length=20)
     admin = models.ForeignKey(Users, on_delete=get_default_user, related_name="admin", blank=True, null=True)
     admin_note = models.TextField("管理员备注", max_length=1000, blank=True, null=True)
