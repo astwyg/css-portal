@@ -1,0 +1,27 @@
+{% extends 'page/base.html' %}
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/">首页</a></li>
+    <li class="active">知识库详情</li>
+</ol>
+<div class="row">
+    <div class="col-md-8 col-md-offset-1 col-xs-12 text-center">
+        <h2>{{data.title | safe}}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-1 col-xs-12">
+        {{data.content | safe}}
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+
+</script>
+{% endblock %}

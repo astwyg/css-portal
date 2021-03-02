@@ -136,22 +136,18 @@ def do_logout(req):
 
 def updateUserInfo(req):
     if req.method == "POST":
-        data = json.loads(req.body)
+        data = req.POST
         user = req.user
 
         # 查重
         user_check = User.objects.filter(username = data.get("phone"))
         if len(user_check) and user_check[0].id != user.id:
-            return JsonResponse({
-                "status": 1,
-                "message": "手机号{}已注册, 如有问题请致电咨询.".format(user_check.phone)
-            })
+            messages.add_message(req, messages.ERROR, "手机号{}已注册, 如有问题请致电咨询.".format(user_check.phone))
+            return redirect(req.META.get("HTTP_REFERER", "/"))
         user_check = User.objects.filter(username=data.get("email"))
         if len(user_check) and user_check[0].id != user.id:
-            return JsonResponse({
-                "status": 2,
-                "message": "邮箱{}已注册, 如有问题请致电咨询.".format(user_check.email)
-            })
+            messages.add_message(req, messages.ERROR, "邮箱{}已注册, 如有问题请致电咨询.".format(user_check.email))
+            return redirect(req.META.get("HTTP_REFERER", "/"))
         else:
             users = Users.objects.get(user=req.user)
             # 同步udesk
@@ -179,10 +175,9 @@ def updateUserInfo(req):
             if data.get("passwd"):
                 user.set_password(data.get("passwd"))
             user.save()
-            return JsonResponse({
-                "status": 0,
-                "message": ""
-            })
+            login(req, user)
+            messages.add_message(req, messages.SUCCESS, "用户资料已经更新")
+            return redirect("/")
 
 
 def register_page(req):
