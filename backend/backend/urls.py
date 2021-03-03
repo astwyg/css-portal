@@ -48,7 +48,9 @@ urlpatterns = [
     path('admin/inviteCode/bulk_add/', inviteCode_views.batchCreate),
 
     path("labManagement/", labManagment_views.index),
+    path("labManagement/detail/", labManagment_views.resourceDetail),
     path("labManagement/add/", labManagment_views.add_page),
     path("labManagement/listApi/", labManagment_views.listApi),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("labManagement/exportAll/", labManagment_views.exportResources),
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

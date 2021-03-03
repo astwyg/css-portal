@@ -10,11 +10,13 @@ class ResourceForm(ModelForm):
         fields = [
             "project_name",
             "project_description",
+            "product",
             "domain",
             "business",
             "region",
             "location",
             "machine_type",
+            "cpu_type",
             "machine_number",
             "machine_config",
             "machine_env",

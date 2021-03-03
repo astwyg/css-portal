@@ -93,7 +93,7 @@
         content = '<tr><td colSpan="3" style="text-align: center">您目前没有申请过资源</td></tr>';
       } else {
         for(var i=0; i<result["data"].length; i++){
-          content += '<tr><td>'+result["data"][i]["project_name"]+'</td><td>'+result["data"][i]["end_time"]+'</td><td>'+result["data"][i]["status"]+'</td></tr>'
+          content += '<tr><td><a href="/labManagement/detail/?id='+result["data"][i]["id"]+'">'+result["data"][i]["project_name"]+'</a></td><td>'+result["data"][i]["end_time"]+'</td><td>'+result["data"][i]["status"]+'</td></tr>'
         }
       }
       $("#resources tbody").empty("");

@@ -132,6 +132,12 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT= '/var/www/static/'
 
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+else:
+    MEDIA_ROOT = '/var/www/media/'
+MEDIA_URL = '/media/'
+
 
 # debug
 CORS_ORIGIN_ALLOW_ALL = True
