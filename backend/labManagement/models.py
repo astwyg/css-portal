@@ -2,6 +2,7 @@ import datetime
 from django.db import models
 from users.models import Users
 from multiselectfield import MultiSelectField
+from django.core.validators import MinValueValidator
 
 
 def get_default_user():
@@ -9,7 +10,7 @@ def get_default_user():
 
 
 def next_month():
-    return datetime.date.today()+datetime.timedelta(days=1)
+    return datetime.date.today()+datetime.timedelta(days=30)
 
 
 class Resource(models.Model):
@@ -87,7 +88,7 @@ class Resource(models.Model):
     location = models.CharField("项目所在地", max_length=1000)
     machine_type = models.CharField("设备类型", max_length=10, choices=MACHINE_CHOICES)
     cpu_type = MultiSelectField("适配CPU", max_length=20, choices=CPU_CHOICES, blank=True, null=True)
-    machine_number = models.IntegerField("设备数量(台)")
+    machine_number = models.IntegerField("设备数量(台)", default=1, validators=[MinValueValidator(1)])
     machine_config = models.CharField("硬件配置", max_length=255, default="(4)核, (8)G RAM, (200)G SSD存储.")
     machine_env = models.CharField("软件要求", max_length=255, default="麒麟V10 Server")
     remark = models.TextField("备注", max_length=255)

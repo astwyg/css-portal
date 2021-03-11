@@ -68,7 +68,7 @@ def exportResources(req):
         allResources = Resource.objects.all()
         for ins in allResources:
             try:
-                file_path = ins.cert_file.path
+                file_path = ins.cert_file.url
             except ValueError:
                 file_path = "未上传"
             writer.writerow([ins.id, ins.user.company, ins.product, ins.cpu_type, ins.machine_env, ins.domain, ins.business, ins.cert_status, file_path, ins.admin])

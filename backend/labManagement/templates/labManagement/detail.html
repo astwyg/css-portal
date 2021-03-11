@@ -79,7 +79,13 @@
         </div>
         <div class="row">
             <div class="col-xs-6 text-right">适配认证证书:</div>
-            <div class="col-xs-6"><img style="max-width: 100%;" src="{{ins.cert_file.url}}" alt=""></div>
+            <div class="col-xs-6">
+                {% if ins.cert_file %}
+                <img style="max-width: 100%;" src="{{ins.cert_file.url}}" alt="">
+                {% else %}
+                未上传
+                {% endif %}
+            </div>
         </div>
         <div class="row">
             <div class="col-xs-6 text-right">管理员:</div>
