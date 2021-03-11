@@ -39,3 +39,4 @@ yarn-error.log*
 devops.md
 docker_run_test.sh
 /backend/media
+/backend/static_product

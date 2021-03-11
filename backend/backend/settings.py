@@ -130,7 +130,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-STATIC_ROOT= os.path.join(BASE_DIR, "static")  # see urls.py
+STATIC_ROOT= os.path.join(BASE_DIR, "static_product")  # see urls.py
 
 if DEBUG:
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
