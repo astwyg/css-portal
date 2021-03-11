@@ -24,6 +24,27 @@ import labManagement.views as labManagment_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+# for static_patch
+from django.views.static import serve
+from django.core.exceptions import ImproperlyConfigured
+from django.urls import re_path
+import re
+
+
+def static_patch(prefix, view=serve, **kwargs):
+    """
+    生产环境中, 由于IT只给一个nginx通过端口做反向代理, 我们需要自己处理静态资源, 我不愿意在nginx和uwsgi中再插一层nginx, 因为:
+    zen of python: (3.)Simple is better than complex.
+    """
+    if not prefix:
+        raise ImproperlyConfigured("Empty static prefix not permitted")
+    # elif not settings.DEBUG or urlsplit(prefix).netloc: # THE PATCH!
+    #     # No-op if not in debug mode or a non-local prefix.
+    #     return []
+    return [
+        re_path(r'^%s(?P<path>.*)$' % re.escape(prefix.lstrip('/')), view, kwargs=kwargs),
+    ]
+
 
 urlpatterns = [
     path('', page_views.index),
@@ -52,5 +73,5 @@ urlpatterns = [
     path("labManagement/add/", labManagment_views.add_page),
     path("labManagement/listApi/", labManagment_views.listApi),
     path("labManagement/exportAll/", labManagment_views.exportResources),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static_patch(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static_patch(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
