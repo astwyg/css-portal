@@ -7,7 +7,7 @@
     "console-polyfill": "^0.3.0",
     "cra-template": "1.0.3",
     "es5-shim": "^4.5.14",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
